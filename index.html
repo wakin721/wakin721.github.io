@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neri 物种识别系统 - 官方网站</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Roboto', 'sans-serif'],
+                    },
+                    colors: {
+                        md: {
+                            // MD3 Light Theme Colors (Seed: #6750A4)
+                            primary: '#6750A4',
+                            onPrimary: '#FFFFFF',
+                            primaryContainer: '#EADDFF',
+                            onPrimaryContainer: '#21005D',
+                            secondary: '#625B71',
+                            onSecondary: '#FFFFFF',
+                            secondaryContainer: '#E8DEF8',
+                            onSecondaryContainer: '#1D192B',
+                            tertiary: '#7D5260',
+                            onTertiary: '#FFFFFF',
+                            tertiaryContainer: '#FFD8E4',
+                            onTertiaryContainer: '#31111D',
+                            error: '#B3261E',
+                            onError: '#FFFFFF',
+                            errorContainer: '#F9DEDC',
+                            onErrorContainer: '#410E0B',
+                            background: '#FFFBFE',
+                            onBackground: '#1C1B1F',
+                            surface: '#FEF7FF',
+                            onSurface: '#1D1B20',
+                            surfaceVariant: '#E7E0EC',
+                            onSurfaceVariant: '#49454F',
+                            outline: '#79747E',
+                            surfaceContainerLowest: '#FFFFFF',
+                            surfaceContainerLow: '#F7F2FA',
+                            surfaceContainer: '#F3EDF7',
+                            surfaceContainerHigh: '#ECE6F0',
+                            surfaceContainerHighest: '#E6E0E9',
+                        }
+                    },
+                    borderRadius: {
+                        '4xl': '2rem',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: theme('colors.md.background');
+            color: theme('colors.md.onBackground');
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        .material-symbols-outlined.filled {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        /* MD3 Buttons */
+        .md3-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.625rem 1.5rem;
+            border-radius: 9999px; /* Fully rounded */
+            font-weight: 500;
+            font-size: 0.875rem;
+            letter-spacing: 0.00625em;
+            transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .md3-btn::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-color: currentColor;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .md3-btn:hover::after {
+            opacity: 0.08;
+        }
+
+        .md3-btn:active::after {
+            opacity: 0.12;
+        }
+
+        .md3-btn-filled {
+            background-color: theme('colors.md.primary');
+            color: theme('colors.md.onPrimary');
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+        }
+        
+        .md3-btn-filled:hover {
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+
+        .md3-btn-tonal {
+            background-color: theme('colors.md.secondaryContainer');
+            color: theme('colors.md.onSecondaryContainer');
+        }
+
+        .md3-btn-outlined {
+            border: 1px solid theme('colors.md.outline');
+            color: theme('colors.md.primary');
+        }
+
+        /* MD3 Cards */
+        .md3-card {
+            background-color: theme('colors.md.surfaceContainerLow');
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+        }
+        
+        .md3-card-elevated {
+            background-color: theme('colors.md.surfaceContainerLow');
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+
+        .md3-card-elevated:hover {
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            background-color: theme('colors.md.surfaceContainer');
+        }
+
+        /* Navigation active state */
+        .nav-link.active {
+            background-color: theme('colors.md.secondaryContainer');
+            color: theme('colors.md.onSecondaryContainer');
+            font-weight: 500;
+        }
+
+        /* Top App Bar Scroll Effect */
+        .scrolled {
+            background-color: theme('colors.md.surfaceContainer') !important;
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+        }
+    </style>
+</head>
+<body class="relative">
+
+    <header id="topAppBar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-md-surface py-3 px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+            <!-- Mobile Menu Icon -->
+            <button id="mobileMenuBtn" class="lg:hidden p-2 rounded-full hover:bg-md-surfaceVariant text-md-onSurface transition-colors">
+                <span class="material-symbols-outlined">menu</span>
+            </button>
+            <div class="text-xl font-medium text-md-onSurface flex items-center gap-2">
+                <img src="logo.jpg" alt="Neri Logo" class="w-8 h-8 object-contain drop-shadow-sm rounded-md">
+                Neri
+            </div>
+        </div>
+
+        <!-- Desktop Navigation -->
+        <nav class="hidden lg:flex items-center gap-2">
+            <a href="#home" class="nav-link px-4 py-2 rounded-full text-md-onSurfaceVariant hover:bg-md-surfaceVariant transition-colors active">主页</a>
+            <a href="#download" class="nav-link px-4 py-2 rounded-full text-md-onSurfaceVariant hover:bg-md-surfaceVariant transition-colors">下载</a>
+            <a href="#screenshots" class="nav-link px-4 py-2 rounded-full text-md-onSurfaceVariant hover:bg-md-surfaceVariant transition-colors">功能展示</a>
+            <a href="#changelog" class="nav-link px-4 py-2 rounded-full text-md-onSurfaceVariant hover:bg-md-surfaceVariant transition-colors">更新日志</a>
+            <a href="#docs" class="nav-link px-4 py-2 rounded-full text-md-onSurfaceVariant hover:bg-md-surfaceVariant transition-colors">部署文档</a>
+        </nav>
+
+        <!-- Right actions -->
+        <div class="flex items-center">
+            <a href="#download" class="md3-btn md3-btn-filled hidden sm:inline-flex">
+                <span class="material-symbols-outlined">download</span>
+                获取发行版
+            </a>
+        </div>
+    </header>
+
+    <div id="mobileDrawer" class="fixed inset-0 z-[60] hidden bg-black/30 backdrop-blur-sm transition-opacity opacity-0">
+        <div id="mobileDrawerContent" class="absolute top-0 left-0 bottom-0 w-72 bg-md-surfaceContainerLow transform -translate-x-full transition-transform duration-300 rounded-r-[2rem] shadow-2xl p-6">
+            <div class="flex items-center justify-between mb-8">
+                <div class="text-xl font-medium text-md-onSurface flex items-center gap-2">
+                    <img src="logo.jpg" alt="Neri Logo" class="w-8 h-8 object-contain drop-shadow-sm rounded-md">
+                    Neri
+                </div>
+                <button id="closeDrawerBtn" class="p-2 rounded-full hover:bg-md-surfaceVariant text-md-onSurface transition-colors">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            <nav class="flex flex-col gap-2">
+                <a href="#home" class="mobile-nav-link px-4 py-3 rounded-full text-md-onSurfaceVariant hover:bg-md-secondaryContainer hover:text-md-onSecondaryContainer transition-colors font-medium flex items-center gap-3 active bg-md-secondaryContainer text-md-onSecondaryContainer">
+                    <span class="material-symbols-outlined">home</span>主页
+                </a>
+                <a href="#download" class="mobile-nav-link px-4 py-3 rounded-full text-md-onSurfaceVariant hover:bg-md-secondaryContainer hover:text-md-onSecondaryContainer transition-colors font-medium flex items-center gap-3">
+                    <span class="material-symbols-outlined">download</span>下载
+                </a>
+                <a href="#screenshots" class="mobile-nav-link px-4 py-3 rounded-full text-md-onSurfaceVariant hover:bg-md-secondaryContainer hover:text-md-onSecondaryContainer transition-colors font-medium flex items-center gap-3">
+                    <span class="material-symbols-outlined">image</span>功能展示
+                </a>
+                <a href="#changelog" class="mobile-nav-link px-4 py-3 rounded-full text-md-onSurfaceVariant hover:bg-md-secondaryContainer hover:text-md-onSecondaryContainer transition-colors font-medium flex items-center gap-3">
+                    <span class="material-symbols-outlined">update</span>更新日志
+                </a>
+                <a href="#docs" class="mobile-nav-link px-4 py-3 rounded-full text-md-onSurfaceVariant hover:bg-md-secondaryContainer hover:text-md-onSecondaryContainer transition-colors font-medium flex items-center gap-3">
+                    <span class="material-symbols-outlined">description</span>部署文档
+                </a>
+            </nav>
+        </div>
+    </div>
+
+    <main class="pt-20">
+        <section id="home" class="min-h-[85vh] flex items-center justify-center px-4 sm:px-6 lg:px-8 relative overflow-hidden bg-md-surface">
+            <!-- Decorative background element -->
+            <div class="absolute top-1/4 -right-20 w-96 h-96 bg-md-primaryContainer rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-blob"></div>
+            <div class="absolute bottom-1/4 -left-20 w-80 h-80 bg-md-tertiaryContainer rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-blob animation-delay-2000"></div>
+            
+            <div class="max-w-4xl mx-auto text-center relative z-10">
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-md-surfaceContainerHigh text-md-onSurfaceVariant text-sm font-medium mb-8">
+                    <span class="w-2 h-2 rounded-full bg-md-primary"></span>
+                    集成 2025版《中国生物物种名录》
+                </div>
+                <h1 class="text-5xl md:text-7xl font-bold tracking-tight text-md-onSurface mb-6 leading-tight">
+                    下一代野生动物<br/>
+                    <span class="text-md-primary">智能识别与管理工作流</span>
+                </h1>
+                <p class="mt-6 text-lg md:text-xl text-md-onSurfaceVariant max-w-2xl mx-auto mb-10">
+                    Neri 专为生态研究与野生动物保护打造。集成本地 AI 目标检测模型，自动提取图像 EXIF 并在本地比对《中国生物物种名录》（鸟纲/哺乳纲），提供一站式的数据处理与导出体验。
+                </p>
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <a href="#download" class="md3-btn md3-btn-filled text-base px-8 py-3 w-full sm:w-auto">
+                        <span class="material-symbols-outlined">rocket_launch</span>
+                        获取最新版本
+                    </a>
+                    <a href="#docs" class="md3-btn md3-btn-tonal text-base px-8 py-3 w-full sm:w-auto">
+                        <span class="material-symbols-outlined">menu_book</span>
+                        源码与部署部署
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="download" class="py-24 bg-md-surfaceContainerLowest px-4 sm:px-6 lg:px-8">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold text-md-onSurface mb-4">下载桌面端环境</h2>
+                    <p class="text-md-onSurfaceVariant text-lg">支持 Flutter 前端与 Python 后端无缝协同。</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+                    <!-- Windows -->
+                    <div class="md3-card md3-card-elevated flex flex-col items-center text-center hover:-translate-y-1">
+                        <div class="w-16 h-16 rounded-full bg-md-primaryContainer text-md-onPrimaryContainer flex items-center justify-center mb-6">
+                            <span class="material-symbols-outlined text-3xl">desktop_windows</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-md-onSurface mb-2">Windows (x64)</h3>
+                        <p class="text-md-onSurfaceVariant text-sm mb-6 flex-grow">包含 C 语言 Launcher 启动器与完整的 Python 依赖环境，开箱即用。</p>
+                        <button class="md3-btn md3-btn-tonal w-full">
+                            <span class="material-symbols-outlined">download</span>下载打包版 (.zip)
+                        </button>
+                    </div>
+
+                    <!-- macOS -->
+                    <div class="md3-card md3-card-elevated flex flex-col items-center text-center hover:-translate-y-1">
+                        <div class="w-16 h-16 rounded-full bg-md-secondaryContainer text-md-onSecondaryContainer flex items-center justify-center mb-6">
+                            <span class="material-symbols-outlined text-3xl">desktop_mac</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-md-onSurface mb-2">macOS / Linux</h3>
+                        <p class="text-md-onSurfaceVariant text-sm mb-6 flex-grow">支持从源码编译 Flutter 前端，通过 API Client 与 Python 后端通信。</p>
+                        <button class="md3-btn md3-btn-tonal w-full">
+                            <span class="material-symbols-outlined">code</span>前往 GitHub 仓库
+                        </button>
+                    </div>
+
+                    <!-- Models -->
+                    <div class="md3-card md3-card-elevated flex flex-col items-center text-center hover:-translate-y-1">
+                        <div class="w-16 h-16 rounded-full bg-md-tertiaryContainer text-md-onTertiaryContainer flex items-center justify-center mb-6">
+                            <span class="material-symbols-outlined text-3xl">model_training</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-md-onSurface mb-2">AI 模型权重</h3>
+                        <p class="text-md-onSurfaceVariant text-sm mb-6 flex-grow">下载最新的 26m_p2_0224.pt 模型与物种数据库 (SQLite) 用于离线推理。</p>
+                        <button class="md3-btn md3-btn-tonal w-full">
+                            <span class="material-symbols-outlined">download</span>下载资源包 (Res)
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="screenshots" class="py-24 bg-md-surface px-4 sm:px-6 lg:px-8">
+            <div class="max-w-7xl mx-auto">
+                <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+                    <div>
+                        <h2 class="text-3xl md:text-4xl font-bold text-md-onSurface mb-4">功能与界面展示</h2>
+                        <p class="text-md-onSurfaceVariant text-lg">采用全新的 Material Design 3 设计，打造现代化的 Flutter 桌面应用。</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Screenshot 1 -->
+                    <div class="group relative rounded-[2rem] overflow-hidden bg-md-surfaceContainerLow border border-md-surfaceVariant">
+                        <img src="https://placehold.co/800x600/EADDFF/21005D?text=媒体处理主控台" alt="主页截图" class="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-105">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+                            <span class="text-white font-medium text-lg">直观的媒体导入与处理队列</span>
+                        </div>
+                    </div>
+                    <!-- Screenshot 2 -->
+                    <div class="group relative rounded-[2rem] overflow-hidden bg-md-surfaceContainerLow border border-md-surfaceVariant">
+                        <img src="https://placehold.co/800x600/FFD8E4/31111D?text=物种智能识别验证" alt="验证截图" class="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-105">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+                            <span class="text-white font-medium text-lg">基于 AI 的边框检测与人工验证</span>
+                        </div>
+                    </div>
+                    <!-- Screenshot 3 -->
+                    <div class="group relative rounded-[2rem] overflow-hidden bg-md-surfaceContainerLow border border-md-surfaceVariant lg:col-span-1 md:col-span-2">
+                        <img src="https://placehold.co/800x600/E8DEF8/1D192B?text=名录比对与导出" alt="名录比对" class="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-105">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+                            <span class="text-white font-medium text-lg">与《中国生物物种名录》强关联并支持多样化导出</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="changelog" class="py-24 bg-md-surfaceContainer px-4 sm:px-6 lg:px-8">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold text-md-onSurface mb-4">开发动态与更新</h2>
+                    <p class="text-md-onSurfaceVariant text-lg">Neri 一直在快速进化中。</p>
+                </div>
+
+                <div class="relative border-l-2 border-md-surfaceVariant ml-4 md:ml-0 md:pl-0">
+                    <!-- Update Item 1 -->
+                    <div class="mb-12 relative pl-8 md:pl-0">
+                        <div class="md:hidden absolute w-4 h-4 bg-md-primary rounded-full -left-[9px] top-1"></div>
+                        <div class="md:flex items-start justify-between">
+                            <div class="md:w-1/4 md:text-right md:pr-8 relative">
+                                <div class="hidden md:block absolute w-4 h-4 bg-md-primary rounded-full -right-[9px] top-1 shadow-[0_0_0_4px_theme('colors.md.surfaceContainer')]"></div>
+                                <h3 class="text-xl font-bold text-md-onSurface">v3.0.3-beta</h3>
+                                <p class="text-md-onSurfaceVariant text-sm mt-1">2026年05月23日</p>
+                                <span class="inline-block px-2 py-1 bg-md-primaryContainer text-md-onPrimaryContainer text-xs rounded-lg mt-2 font-medium">调试增强与优化</span>
+                            </div>
+                            <div class="md:w-3/4 md:pl-8 mt-4 md:mt-0">
+                                <div class="md3-card">
+                                    <h4 class="text-lg font-bold text-md-onSurface mb-3">全面优化体验与稳定性增强</h4>
+                                    <ul class="list-disc list-inside text-md-onSurfaceVariant space-y-2">
+                                        <li><strong>调试增强</strong>：新增调试模式页面，可直观查看前后端版本、运行平台及 GPU/PyTorch/YOLO 依赖状态，支持一键复制调试信息与读取日志。</li>
+                                        <li><strong>体验优化</strong>：优化全局加载与程序关闭流程；未检测到可用 GPU 时自动禁用 FP16 推理；开始界面任务提示改为显示处理路径。</li>
+                                        <li><strong>校验优化</strong>：物种分组按置信度动态重算，低阈值检测自动归入过滤分组，整组低于阈值直接显示为“空”。</li>
+                                        <li><strong>问题修复</strong>：修复了 Windows 端连接后端可能闪退的问题，以及部分权限场景下监听误判退出的异常。</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Update Item 2 -->
+                    <div class="mb-12 relative pl-8 md:pl-0">
+                        <div class="md:hidden absolute w-4 h-4 bg-md-outline rounded-full -left-[9px] top-1"></div>
+                        <div class="md:flex items-start justify-between">
+                            <div class="md:w-1/4 md:text-right md:pr-8 relative">
+                                <div class="hidden md:block absolute w-4 h-4 bg-md-outline rounded-full -right-[9px] top-1 shadow-[0_0_0_4px_theme('colors.md.surfaceContainer')]"></div>
+                                <h3 class="text-xl font-bold text-md-onSurface">v2.0.5-beta</h3>
+                                <p class="text-md-onSurfaceVariant text-sm mt-1">2025年09月17日</p>
+                            </div>
+                            <div class="md:w-3/4 md:pl-8 mt-4 md:mt-0">
+                                <div class="md3-card bg-md-surfaceContainerLow">
+                                    <h4 class="text-lg font-bold text-md-onSurface mb-3">界面交互与逻辑修复</h4>
+                                    <ul class="list-disc list-inside text-md-onSurfaceVariant space-y-2">
+                                        <li>修复了浅色模式下导出设置复选框无法勾选的 Bug，并重新设计了复选框样式。</li>
+                                        <li>修复了快速标记设置中点击“增加”后序号显示不正确的 Bug。</li>
+                                        <li>修复了快速标记设置中先“增加”后立即点击“删除”失效的逻辑问题。</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Update Item 3 -->
+                    <div class="mb-12 relative pl-8 md:pl-0">
+                        <div class="md:hidden absolute w-4 h-4 bg-md-outline rounded-full -left-[9px] top-1"></div>
+                        <div class="md:flex items-start justify-between">
+                            <div class="md:w-1/4 md:text-right md:pr-8 relative">
+                                <div class="hidden md:block absolute w-4 h-4 bg-md-outline rounded-full -right-[9px] top-1 shadow-[0_0_0_4px_theme('colors.md.surfaceContainer')]"></div>
+                                <h3 class="text-xl font-bold text-md-onSurface">v2.0.4-beta</h3>
+                                <p class="text-md-onSurfaceVariant text-sm mt-1">2025年09月16日</p>
+                            </div>
+                            <div class="md:w-3/4 md:pl-8 mt-4 md:mt-0">
+                                <div class="md3-card bg-md-surfaceContainerLowest">
+                                    <h4 class="text-lg font-bold text-md-onSurface mb-3">名录升级与自定义导出</h4>
+                                    <ul class="list-disc list-inside text-md-onSurfaceVariant space-y-2">
+                                        <li>数据表大幅增强：新增目、科、属及其拉丁名列，数据源全面对接 <strong>《中国生物物种名录》2025版</strong>。</li>
+                                        <li>新增高级设置：用户现在可以自由勾选和配置需要导出的数据字段。</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-12 text-center">
+                    <p class="text-sm text-md-error flex items-center justify-center gap-1 font-medium bg-md-errorContainer text-md-onErrorContainer inline-flex px-4 py-2 rounded-full">
+                        <span class="material-symbols-outlined text-sm">warning</span>
+                        提示：部分 avi 格式视频可能无法识别，暂不支持 Windows 7 系统。对 Intel GPU 的支持为实验性。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="docs" class="py-24 bg-md-surface px-4 sm:px-6 lg:px-8">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold text-md-onSurface mb-4">源码部署与文档</h2>
+                    <p class="text-md-onSurfaceVariant text-lg">快速在本地构建 Neri 前后端开发环境。</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- Sidebar menu -->
+                    <div class="lg:col-span-1">
+                        <div class="md3-card sticky top-24">
+                            <h3 class="text-lg font-bold text-md-onSurface mb-4 px-2">快速导航</h3>
+                            <nav class="flex flex-col space-y-1">
+                                <a href="javascript:void(0)" class="px-4 py-3 rounded-full bg-md-secondaryContainer text-md-onSecondaryContainer font-medium">环境准备 (Setup)</a>
+                                <a href="javascript:void(0)" class="px-4 py-3 rounded-full text-md-onSurfaceVariant hover:bg-md-surfaceVariant transition-colors">Python 后端运行</a>
+                                <a href="javascript:void(0)" class="px-4 py-3 rounded-full text-md-onSurfaceVariant hover:bg-md-surfaceVariant transition-colors">Flutter 前端编译</a>
+                                <a href="javascript:void(0)" class="px-4 py-3 rounded-full text-md-onSurfaceVariant hover:bg-md-surfaceVariant transition-colors">关于 Launcher</a>
+                            </nav>
+                        </div>
+                    </div>
+
+                    <!-- Doc content -->
+                    <div class="lg:col-span-2">
+                        <div class="md3-card p-8 lg:p-10">
+                            <h1 class="text-3xl font-bold text-md-onSurface mb-6">环境准备与运行 (Setup)</h1>
+                            
+                            <div class="prose prose-slate max-w-none text-md-onSurfaceVariant">
+                                <p class="text-lg mb-6">Neri 的架构分为前端 (Flutter Desktop) 和后端 (Python AI/数据处理服务)。请确保您的开发机器已安装 Python 3.10+ 和 Flutter SDK。</p>
+                                
+                                <h3 class="text-xl font-bold text-md-onSurface mt-8 mb-4">1. 安装 Python 依赖</h3>
+                                <p class="mb-4">在项目根目录下，使用 pip 安装 requirements.txt 中的包（主要包含 PyTorch, OpenCV 等推理与图像处理库）：</p>
+                                <div class="bg-md-surfaceContainerHighest text-md-onSurface p-4 rounded-xl font-mono text-sm mb-6 flex justify-between items-center group cursor-pointer" onclick="copyCode(this, 'pip install -r requirements.txt')">
+                                    <code>pip install -r requirements.txt</code>
+                                    <span class="material-symbols-outlined text-md-outline group-hover:text-md-primary transition-colors">content_copy</span>
+                                </div>
+
+                                <h3 class="text-xl font-bold text-md-onSurface mt-8 mb-4">2. 资源与模型就绪</h3>
+                                <p class="mb-4">确保您的 <code>/res</code> 目录下存在所需模型与字体文件：</p>
+                                <ul class="list-disc list-inside mb-4">
+                                    <li><code>res/model/26m_p2_0224.pt</code> (检测模型)</li>
+                                    <li><code>res/species_database.db</code> (本地名录数据库)</li>
+                                </ul>
+
+                                <h3 class="text-xl font-bold text-md-onSurface mt-8 mb-4">3. 启动前端 Flutter 应用</h3>
+                                <p class="mb-4">进入 <code>frontend</code> 目录并获取依赖，最后启动桌面端：</p>
+                                <div class="bg-md-surfaceContainerHighest text-md-onSurface p-4 rounded-xl font-mono text-sm mb-6 flex justify-between items-center group cursor-pointer" onclick="copyCode(this, 'cd frontend\nflutter pub get\nflutter run -d windows')">
+                                    <code>cd frontend<br/>flutter pub get<br/>flutter run -d windows</code>
+                                    <span class="material-symbols-outlined text-md-outline group-hover:text-md-primary transition-colors">content_copy</span>
+                                </div>
+                                <p class="text-sm text-md-onSurfaceVariant mt-2">注：在生产环境中，您可以通过编译 <code>launcher.c</code> 来一键启动前后端进程。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- AI 悬浮按钮 (FAB) -->
+    <button id="aiFab" class="fixed bottom-6 right-6 w-14 h-14 bg-md-primaryContainer text-md-onPrimaryContainer rounded-[1rem] shadow-lg flex items-center justify-center hover:shadow-xl hover:-translate-y-1 transition-all z-[60]">
+        <span class="material-symbols-outlined text-2xl">smart_toy</span>
+    </button>
+
+    <!-- AI 聊天窗口面板 -->
+    <div id="aiChatWindow" class="fixed bottom-24 right-6 w-[calc(100vw-3rem)] sm:w-[380px] h-[500px] max-h-[70vh] bg-md-surfaceContainerLow rounded-3xl shadow-2xl flex flex-col z-[60] transform scale-95 opacity-0 pointer-events-none transition-all duration-300 origin-bottom-right border border-md-surfaceVariant">
+        <!-- Header -->
+        <div class="px-6 py-4 bg-md-primary text-md-onPrimary rounded-t-3xl flex justify-between items-center flex-shrink-0">
+            <div class="flex items-center gap-2 font-medium">
+                <span class="material-symbols-outlined">auto_awesome</span>
+                Neri 助手
+            </div>
+            <button id="aiChatClose" class="text-md-onPrimary hover:bg-black/10 rounded-full p-1 transition-colors">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+        <!-- Messages 列表 -->
+        <div id="aiChatMessages" class="flex-grow p-4 overflow-y-auto flex flex-col gap-4 scroll-smooth">
+            <!-- 初始问候语 -->
+            <div class="flex gap-2 items-end self-start max-w-[85%]">
+                <div class="w-8 h-8 rounded-full bg-md-primaryContainer text-md-onPrimaryContainer flex items-center justify-center flex-shrink-0">
+                    <span class="material-symbols-outlined text-sm">smart_toy</span>
+                </div>
+                <div class="bg-md-surfaceContainer bg-opacity-80 p-3 rounded-2xl rounded-bl-sm text-md-onSurface text-sm leading-relaxed">
+                    你好！我是 Neri 专属的 AI 助手。你可以问我关于物种识别功能、本地部署、Flutter 前端或模型调度相关的问题！
+                </div>
+            </div>
+        </div>
+        <!-- Input 输入区 -->
+        <div class="p-4 bg-md-surfaceContainerLowest rounded-b-3xl flex-shrink-0 border-t border-md-surfaceVariant flex gap-2 items-center">
+            <input type="text" id="aiChatInput" placeholder="输入您的问题..." class="flex-grow bg-md-surfaceContainerHigh text-md-onSurface px-4 py-2 rounded-full focus:outline-none focus:ring-2 focus:ring-md-primary text-sm transition-all placeholder:text-md-onSurfaceVariant">
+            <button id="aiChatSend" class="w-10 h-10 rounded-full bg-md-primary text-md-onPrimary flex items-center justify-center hover:shadow-md transition-shadow disabled:opacity-50 disabled:cursor-not-allowed">
+                <span class="material-symbols-outlined text-sm">send</span>
+            </button>
+        </div>
+    </div>
+
+    <footer class="bg-md-surfaceContainerHigh py-12 px-4 sm:px-6 lg:px-8 border-t border-md-surfaceVariant">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+            <div class="col-span-1 md:col-span-2">
+                <div class="text-2xl font-bold text-md-onSurface flex items-center gap-2 mb-4">
+                    <img src="logo.jpg" alt="Neri Logo" class="w-8 h-8 object-contain filter drop-shadow-sm rounded-md">
+                    Neri
+                </div>
+                <p class="text-md-onSurfaceVariant max-w-sm mb-6">
+                    致力于提供最高效、最现代化的生态影像数据处理解决方案。由 Flutter 与 Python 强力驱动。
+                </p>
+                <div class="flex gap-4">
+                    <a href="#" class="w-10 h-10 rounded-full bg-md-surfaceContainerLow flex items-center justify-center text-md-onSurface hover:bg-md-primaryContainer hover:text-md-onPrimaryContainer transition-colors">
+                        <span class="material-symbols-outlined">code</span>
+                    </a>
+                </div>
+            </div>
+            
+            <div>
+                <h4 class="font-bold text-md-onSurface mb-4">相关资源</h4>
+                <ul class="space-y-3">
+                    <li><a href="#" class="text-md-onSurfaceVariant hover:text-md-primary transition-colors">《中国生物物种名录》</a></li>
+                    <li><a href="#" class="text-md-onSurfaceVariant hover:text-md-primary transition-colors">Flutter 官方文档</a></li>
+                    <li><a href="#" class="text-md-onSurfaceVariant hover:text-md-primary transition-colors">PyTorch 社区</a></li>
+                </ul>
+            </div>
+            
+            <div>
+                <h4 class="font-bold text-md-onSurface mb-4">关于</h4>
+                <ul class="space-y-3">
+                    <li><a href="#" class="text-md-onSurfaceVariant hover:text-md-primary transition-colors">项目主页</a></li>
+                    <li><a href="#" class="text-md-onSurfaceVariant hover:text-md-primary transition-colors">开源协议 (LICENSE)</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto pt-8 border-t border-md-surfaceVariant text-center text-md-onSurfaceVariant text-sm">
+            &copy; 2026 Neri Project. 保留所有权利。
+        </div>
+    </footer>
+
+    <script>
+        // Custom Copy to Clipboard Function (No alert box)
+        function copyCode(element, text) {
+            const tempInput = document.createElement('textarea');
+            tempInput.value = text;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+            
+            // Visual feedback
+            const icon = element.querySelector('.material-symbols-outlined');
+            const originalIcon = icon.innerText;
+            icon.innerText = 'check';
+            icon.classList.add('text-green-500');
+            
+            setTimeout(() => {
+                icon.innerText = originalIcon;
+                icon.classList.remove('text-green-500');
+            }, 2000);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Top App Bar Scroll Effect
+            const topAppBar = document.getElementById('topAppBar');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 20) {
+                    topAppBar.classList.add('scrolled');
+                } else {
+                    topAppBar.classList.remove('scrolled');
+                }
+            });
+
+            // Mobile Drawer Toggle
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const closeDrawerBtn = document.getElementById('closeDrawerBtn');
+            const mobileDrawer = document.getElementById('mobileDrawer');
+            const mobileDrawerContent = document.getElementById('mobileDrawerContent');
+            const mobileLinks = document.querySelectorAll('.mobile-nav-link');
+
+            function openDrawer() {
+                mobileDrawer.classList.remove('hidden');
+                // trigger reflow
+                void mobileDrawer.offsetWidth;
+                mobileDrawer.classList.remove('opacity-0');
+                mobileDrawerContent.classList.remove('-translate-x-full');
+            }
+
+            function closeDrawer() {
+                mobileDrawer.classList.add('opacity-0');
+                mobileDrawerContent.classList.add('-translate-x-full');
+                setTimeout(() => {
+                    mobileDrawer.classList.add('hidden');
+                }, 300);
+            }
+
+            mobileMenuBtn.addEventListener('click', openDrawer);
+            closeDrawerBtn.addEventListener('click', closeDrawer);
+            mobileDrawer.addEventListener('click', (e) => {
+                if (e.target === mobileDrawer) closeDrawer();
+            });
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', closeDrawer);
+            });
+
+            // Scrollspy logic to highlight active nav link
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-link');
+            const mobNavLinks = document.querySelectorAll('.mobile-nav-link');
+
+            window.addEventListener('scroll', () => {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.clientHeight;
+                    // Adjusted offset for sticky header
+                    if (scrollY >= (sectionTop - 150)) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active', 'bg-md-secondaryContainer', 'text-md-onSecondaryContainer', 'font-medium');
+                    if (link.getAttribute('href') === `#${current}`) {
+                        link.classList.add('active');
+                    }
+                });
+
+                mobNavLinks.forEach(link => {
+                    link.classList.remove('active', 'bg-md-secondaryContainer', 'text-md-onSecondaryContainer');
+                    if (link.getAttribute('href') === `#${current}`) {
+                        link.classList.add('active', 'bg-md-secondaryContainer', 'text-md-onSecondaryContainer');
+                    }
+                });
+            });
+
+            // Gemini API 配置
+            const apiKey = ""; // API 密钥将在 Canvas 环境中自动注入
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+
+            const aiFab = document.getElementById('aiFab');
+            const aiChatWindow = document.getElementById('aiChatWindow');
+            const aiChatClose = document.getElementById('aiChatClose');
+            const aiChatMessages = document.getElementById('aiChatMessages');
+            const aiChatInput = document.getElementById('aiChatInput');
+            const aiChatSend = document.getElementById('aiChatSend');
+
+            let isChatOpen = false;
+            let chatHistory = [];
+            // 配置 AI 的人设，让它的回答符合语境
+            const systemPrompt = "你是 Neri 官网的官方智能助手。Neri 是一款专注于生态研究与野生动物（鸟纲、哺乳纲）智能识别的工作流软件。它集成了本地深度学习模型、图像视频EXIF数据提取，以及《中国生物物种名录》的本地校验功能。前端采用 Flutter MD3 构建，后端使用 Python 提供处理服务。请用简短、专业且友好的中文回答用户的问题，如果遇到不清楚的，引导用户查看项目部署文档。字数尽量控制在 150 字以内。";
+
+            // 切换聊天窗口显示/隐藏
+            function toggleChat() {
+                isChatOpen = !isChatOpen;
+                if (isChatOpen) {
+                    aiChatWindow.classList.remove('opacity-0', 'scale-95', 'pointer-events-none');
+                    aiChatWindow.classList.add('opacity-100', 'scale-100');
+                    aiChatInput.focus();
+                } else {
+                    aiChatWindow.classList.add('opacity-0', 'scale-95', 'pointer-events-none');
+                    aiChatWindow.classList.remove('opacity-100', 'scale-100');
+                }
+            }
+
+            aiFab.addEventListener('click', toggleChat);
+            aiChatClose.addEventListener('click', toggleChat);
+
+            // 在对话列表中追加气泡
+            function appendMessage(text, isUser) {
+                const msgDiv = document.createElement('div');
+                msgDiv.className = `flex gap-2 items-end max-w-[85%] ${isUser ? 'self-end flex-row-reverse' : 'self-start'}`;
+                
+                let avatarHtml = '';
+                if (!isUser) {
+                    avatarHtml = `
+                        <div class="w-8 h-8 rounded-full bg-md-primaryContainer text-md-onPrimaryContainer flex items-center justify-center flex-shrink-0">
+                            <span class="material-symbols-outlined text-sm">smart_toy</span>
+                        </div>
+                    `;
+                }
+
+                // 简单的换行符转换为 HTML
+                const formattedText = text.replace(/\n/g, '<br/>');
+
+                const bubbleClasses = isUser 
+                    ? 'bg-md-primary text-md-onPrimary rounded-2xl rounded-br-sm p-3 text-sm leading-relaxed'
+                    : 'bg-md-surfaceContainer bg-opacity-80 p-3 rounded-2xl rounded-bl-sm text-md-onSurface text-sm leading-relaxed';
+
+                msgDiv.innerHTML = `
+                    ${avatarHtml}
+                    <div class="${bubbleClasses}">${formattedText}</div>
+                `;
+                
+                // 如果存在加载动画，在 AI 回复后将其移除
+                const loadingId = document.getElementById('aiLoading');
+                if (loadingId && !isUser) {
+                    loadingId.remove();
+                }
+
+                aiChatMessages.appendChild(msgDiv);
+                aiChatMessages.scrollTop = aiChatMessages.scrollHeight;
+            }
+
+            // 添加加载动画气泡
+            function appendLoading() {
+                const msgDiv = document.createElement('div');
+                msgDiv.id = 'aiLoading';
+                msgDiv.className = `flex gap-2 items-end self-start max-w-[85%]`;
+                
+                msgDiv.innerHTML = `
+                    <div class="w-8 h-8 rounded-full bg-md-primaryContainer text-md-onPrimaryContainer flex items-center justify-center flex-shrink-0">
+                        <span class="material-symbols-outlined text-sm">smart_toy</span>
+                    </div>
+                    <div class="bg-md-surfaceContainer bg-opacity-80 p-3 rounded-2xl rounded-bl-sm text-md-onSurface text-sm flex gap-1 items-center h-[44px]">
+                        <div class="w-2 h-2 bg-md-onSurfaceVariant rounded-full animate-bounce"></div>
+                        <div class="w-2 h-2 bg-md-onSurfaceVariant rounded-full animate-bounce" style="animation-delay: 0.1s"></div>
+                        <div class="w-2 h-2 bg-md-onSurfaceVariant rounded-full animate-bounce" style="animation-delay: 0.2s"></div>
+                    </div>
+                `;
+                aiChatMessages.appendChild(msgDiv);
+                aiChatMessages.scrollTop = aiChatMessages.scrollHeight;
+            }
+
+            // 实现带有指数退避算法的重试机制，防止请求被节流
+            async function fetchWithRetry(url, options, maxRetries = 3) {
+                let delay = 1000;
+                for (let i = 0; i < maxRetries; i++) {
+                    try {
+                        const response = await fetch(url, options);
+                        if (!response.ok && response.status === 429) {
+                            throw new Error("Throttled");
+                        }
+                        return response;
+                    } catch (error) {
+                        if (i === maxRetries - 1) throw error; // 如果最后一次也失败则抛出异常
+                        await new Promise(resolve => setTimeout(resolve, delay));
+                        delay *= 2;
+                    }
+                }
+            }
+
+            // 发送消息并调用 Gemini API
+            async function handleSend() {
+                const text = aiChatInput.value.trim();
+                if (!text) return;
+
+                // 更新界面状态
+                aiChatInput.value = '';
+                aiChatInput.disabled = true;
+                aiChatSend.disabled = true;
+                appendMessage(text, true);
+                appendLoading();
+
+                // 组装 API 请求负载 (包含对话历史和 System Instruction)
+                const payload = {
+                    contents: [...chatHistory, { role: "user", parts: [{ text }] }],
+                    systemInstruction: { parts: [{ text: systemPrompt }] }
+                };
+
+                try {
+                    const response = await fetchWithRetry(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    
+                    const result = await response.json();
+                    const candidate = result.candidates?.[0];
+
+                    if (candidate && candidate.content?.parts?.[0]?.text) {
+                        const aiText = candidate.content.parts[0].text;
+                        // 更新对话历史
+                        chatHistory.push({ role: "user", parts: [{ text }] });
+                        chatHistory.push({ role: "model", parts: [{ text: aiText }] });
+                        
+                        appendMessage(aiText, false);
+                    } else {
+                        appendMessage("抱歉，我暂时遇到了点问题，无法作答。", false);
+                    }
+                } catch (error) {
+                    // 出错时不将重试日志输出到控制台，仅作友好提示
+                    appendMessage("网络连接出错或服务繁忙，请稍后重试。", false);
+                } finally {
+                    // 恢复输入状态
+                    aiChatInput.disabled = false;
+                    aiChatSend.disabled = false;
+                    aiChatInput.focus();
+                }
+            }
+
+            // 绑定发送事件
+            aiChatSend.addEventListener('click', handleSend);
+            aiChatInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') handleSend();
+            });
+        });
+    </script>
+</body>
+</html>
