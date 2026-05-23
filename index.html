@@ -6,20 +6,15 @@
     <title>Neri 物种识别系统 - 官方网站</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
     <script src="https://cdn.tailwindcss.com"></script>
-    
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: {
-                        sans: ['Roboto', 'sans-serif'],
-                    },
                     colors: {
                         md: {
-                            // MD3 Light Theme Colors (Seed: #6750A4)
                             primary: '#6750A4',
                             onPrimary: '#FFFFFF',
                             primaryContainer: '#EADDFF',
@@ -36,142 +31,132 @@
                             onError: '#FFFFFF',
                             errorContainer: '#F9DEDC',
                             onErrorContainer: '#410E0B',
-                            background: '#FFFBFE',
-                            onBackground: '#1C1B1F',
+                            background: '#FEF7FF',
+                            onBackground: '#1D1B20',
                             surface: '#FEF7FF',
                             onSurface: '#1D1B20',
                             surfaceVariant: '#E7E0EC',
                             onSurfaceVariant: '#49454F',
                             outline: '#79747E',
-                            surfaceContainerLowest: '#FFFFFF',
-                            surfaceContainerLow: '#F7F2FA',
-                            surfaceContainer: '#F3EDF7',
-                            surfaceContainerHigh: '#ECE6F0',
                             surfaceContainerHighest: '#E6E0E9',
+                            surfaceContainerHigh: '#ECE6F0',
+                            surfaceContainer: '#F3EDF7',
+                            surfaceContainerLow: '#F7F2FA',
+                            surfaceContainerLowest: '#FFFFFF',
                         }
                     },
-                    borderRadius: {
-                        '4xl': '2rem',
+                    fontFamily: {
+                        sans: ['Roboto', 'system-ui', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'md3-1': '0px 1px 2px 0px rgba(0,0,0,0.3), 0px 1px 3px 1px rgba(0,0,0,0.15)',
+                        'md3-2': '0px 1px 2px 0px rgba(0,0,0,0.3), 0px 2px 6px 2px rgba(0,0,0,0.15)',
+                        'md3-3': '0px 1px 3px 0px rgba(0,0,0,0.3), 0px 4px 8px 3px rgba(0,0,0,0.15)',
                     }
                 }
             }
         }
     </script>
     <style>
-        body {
-            background-color: theme('colors.md.background');
-            color: theme('colors.md.onBackground');
-            -webkit-font-smoothing: antialiased;
-        }
-
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
-        
         .material-symbols-outlined.filled {
-            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            font-variation-settings: 'FILL' 1;
         }
-
-        /* MD3 Buttons */
+        
+        /* MD3 Button Styles */
         .md3-btn {
+            position: relative;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 0.5rem;
-            padding: 0.625rem 1.5rem;
-            border-radius: 9999px; /* Fully rounded */
+            gap: 8px;
+            border-radius: 9999px;
             font-weight: 500;
             font-size: 0.875rem;
-            letter-spacing: 0.00625em;
+            letter-spacing: 0.1px;
             transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
-            position: relative;
             overflow: hidden;
         }
-
         .md3-btn::after {
-            content: '';
+            content: "";
             position: absolute;
             inset: 0;
             background-color: currentColor;
             opacity: 0;
             transition: opacity 0.2s;
         }
-
         .md3-btn:hover::after {
             opacity: 0.08;
         }
-
         .md3-btn:active::after {
             opacity: 0.12;
         }
-
+        
         .md3-btn-filled {
-            background-color: theme('colors.md.primary');
-            color: theme('colors.md.onPrimary');
-            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+            background-color: #6750A4;
+            color: #FFFFFF;
+            padding: 10px 24px;
+        }
+        .md3-btn-filled:hover {
+            box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.3), 0px 1px 3px 1px rgba(0,0,0,0.15);
         }
         
-        .md3-btn-filled:hover {
-            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-        }
-
         .md3-btn-tonal {
-            background-color: theme('colors.md.secondaryContainer');
-            color: theme('colors.md.onSecondaryContainer');
+            background-color: #EADDFF;
+            color: #21005D;
+            padding: 10px 24px;
         }
-
-        .md3-btn-outlined {
-            border: 1px solid theme('colors.md.outline');
-            color: theme('colors.md.primary');
-        }
-
-        /* MD3 Cards */
+        
         .md3-card {
-            background-color: theme('colors.md.surfaceContainerLow');
             border-radius: 1.5rem;
             padding: 1.5rem;
-            transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+            background-color: #F7F2FA;
+            border: 1px solid #E7E0EC;
+            transition: box-shadow 0.2s;
         }
         
         .md3-card-elevated {
-            background-color: theme('colors.md.surfaceContainerLow');
-            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            border: none;
+            background-color: #F3EDF7;
+            box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.3), 0px 1px 3px 1px rgba(0,0,0,0.15);
         }
-
-        .md3-card-elevated:hover {
-            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-            background-color: theme('colors.md.surfaceContainer');
+        
+        /* Smooth animations */
+        @keyframes blob {
+            0% { transform: translate(0px, 0px) scale(1); }
+            33% { transform: translate(30px, -50px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.9); }
+            100% { transform: translate(0px, 0px) scale(1); }
         }
-
-        /* Navigation active state */
-        .nav-link.active {
-            background-color: theme('colors.md.secondaryContainer');
-            color: theme('colors.md.onSecondaryContainer');
-            font-weight: 500;
+        .animate-blob {
+            animation: blob 7s infinite;
         }
-
-        /* Top App Bar Scroll Effect */
-        .scrolled {
-            background-color: theme('colors.md.surfaceContainer') !important;
-            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+        .animation-delay-2000 {
+            animation-delay: 2s;
         }
+        
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #FEF7FF; }
+        ::-webkit-scrollbar-thumb { background: #E7E0EC; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #79747E; }
     </style>
 </head>
 <body class="relative">
 
     <header id="topAppBar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-md-surface py-3 px-4 sm:px-6 lg:px-8 flex items-center justify-between">
         <div class="flex items-center gap-3">
-            <!-- Mobile Menu Icon -->
             <button id="mobileMenuBtn" class="lg:hidden p-2 rounded-full hover:bg-md-surfaceVariant text-md-onSurface transition-colors">
                 <span class="material-symbols-outlined">menu</span>
             </button>
             <div class="text-xl font-medium text-md-onSurface flex items-center gap-2">
-                <img src="logo.jpg" alt="Neri Logo" class="w-8 h-8 object-contain drop-shadow-sm rounded-md">
+                <img src="logo.png" alt="Neri Logo" class="w-8 h-8 object-contain drop-shadow-sm rounded-md">
                 Neri
             </div>
         </div>
 
-        <!-- Desktop Navigation -->
         <nav class="hidden lg:flex items-center gap-2">
             <a href="#home" class="nav-link px-4 py-2 rounded-full text-md-onSurfaceVariant hover:bg-md-surfaceVariant transition-colors active">主页</a>
             <a href="#download" class="nav-link px-4 py-2 rounded-full text-md-onSurfaceVariant hover:bg-md-surfaceVariant transition-colors">下载</a>
@@ -180,7 +165,6 @@
             <a href="#docs" class="nav-link px-4 py-2 rounded-full text-md-onSurfaceVariant hover:bg-md-surfaceVariant transition-colors">部署文档</a>
         </nav>
 
-        <!-- Right actions -->
         <div class="flex items-center">
             <a href="#download" class="md3-btn md3-btn-filled hidden sm:inline-flex">
                 <span class="material-symbols-outlined">download</span>
@@ -193,7 +177,7 @@
         <div id="mobileDrawerContent" class="absolute top-0 left-0 bottom-0 w-72 bg-md-surfaceContainerLow transform -translate-x-full transition-transform duration-300 rounded-r-[2rem] shadow-2xl p-6">
             <div class="flex items-center justify-between mb-8">
                 <div class="text-xl font-medium text-md-onSurface flex items-center gap-2">
-                    <img src="logo.jpg" alt="Neri Logo" class="w-8 h-8 object-contain drop-shadow-sm rounded-md">
+                    <img src="logo.png" alt="Neri Logo" class="w-8 h-8 object-contain drop-shadow-sm rounded-md">
                     Neri
                 </div>
                 <button id="closeDrawerBtn" class="p-2 rounded-full hover:bg-md-surfaceVariant text-md-onSurface transition-colors">
@@ -222,7 +206,6 @@
 
     <main class="pt-20">
         <section id="home" class="min-h-[85vh] flex items-center justify-center px-4 sm:px-6 lg:px-8 relative overflow-hidden bg-md-surface">
-            <!-- Decorative background element -->
             <div class="absolute top-1/4 -right-20 w-96 h-96 bg-md-primaryContainer rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-blob"></div>
             <div class="absolute bottom-1/4 -left-20 w-80 h-80 bg-md-tertiaryContainer rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-blob animation-delay-2000"></div>
             
@@ -259,7 +242,6 @@
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
-                    <!-- Windows -->
                     <div class="md3-card md3-card-elevated flex flex-col items-center text-center hover:-translate-y-1">
                         <div class="w-16 h-16 rounded-full bg-md-primaryContainer text-md-onPrimaryContainer flex items-center justify-center mb-6">
                             <span class="material-symbols-outlined text-3xl">desktop_windows</span>
@@ -271,7 +253,6 @@
                         </button>
                     </div>
 
-                    <!-- macOS -->
                     <div class="md3-card md3-card-elevated flex flex-col items-center text-center hover:-translate-y-1">
                         <div class="w-16 h-16 rounded-full bg-md-secondaryContainer text-md-onSecondaryContainer flex items-center justify-center mb-6">
                             <span class="material-symbols-outlined text-3xl">desktop_mac</span>
@@ -283,7 +264,6 @@
                         </button>
                     </div>
 
-                    <!-- Models -->
                     <div class="md3-card md3-card-elevated flex flex-col items-center text-center hover:-translate-y-1">
                         <div class="w-16 h-16 rounded-full bg-md-tertiaryContainer text-md-onTertiaryContainer flex items-center justify-center mb-6">
                             <span class="material-symbols-outlined text-3xl">model_training</span>
@@ -308,21 +288,18 @@
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <!-- Screenshot 1 -->
                     <div class="group relative rounded-[2rem] overflow-hidden bg-md-surfaceContainerLow border border-md-surfaceVariant">
                         <img src="https://placehold.co/800x600/EADDFF/21005D?text=媒体处理主控台" alt="主页截图" class="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-105">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
                             <span class="text-white font-medium text-lg">直观的媒体导入与处理队列</span>
                         </div>
                     </div>
-                    <!-- Screenshot 2 -->
                     <div class="group relative rounded-[2rem] overflow-hidden bg-md-surfaceContainerLow border border-md-surfaceVariant">
                         <img src="https://placehold.co/800x600/FFD8E4/31111D?text=物种智能识别验证" alt="验证截图" class="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-105">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
                             <span class="text-white font-medium text-lg">基于 AI 的边框检测与人工验证</span>
                         </div>
                     </div>
-                    <!-- Screenshot 3 -->
                     <div class="group relative rounded-[2rem] overflow-hidden bg-md-surfaceContainerLow border border-md-surfaceVariant lg:col-span-1 md:col-span-2">
                         <img src="https://placehold.co/800x600/E8DEF8/1D192B?text=名录比对与导出" alt="名录比对" class="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-105">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
@@ -341,7 +318,6 @@
                 </div>
 
                 <div class="relative border-l-2 border-md-surfaceVariant ml-4 md:ml-0 md:pl-0">
-                    <!-- Update Item 1 -->
                     <div class="mb-12 relative pl-8 md:pl-0">
                         <div class="md:hidden absolute w-4 h-4 bg-md-primary rounded-full -left-[9px] top-1"></div>
                         <div class="md:flex items-start justify-between">
@@ -365,7 +341,6 @@
                         </div>
                     </div>
 
-                    <!-- Update Item 2 -->
                     <div class="mb-12 relative pl-8 md:pl-0">
                         <div class="md:hidden absolute w-4 h-4 bg-md-outline rounded-full -left-[9px] top-1"></div>
                         <div class="md:flex items-start justify-between">
@@ -387,7 +362,6 @@
                         </div>
                     </div>
 
-                    <!-- Update Item 3 -->
                     <div class="mb-12 relative pl-8 md:pl-0">
                         <div class="md:hidden absolute w-4 h-4 bg-md-outline rounded-full -left-[9px] top-1"></div>
                         <div class="md:flex items-start justify-between">
@@ -426,7 +400,6 @@
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    <!-- Sidebar menu -->
                     <div class="lg:col-span-1">
                         <div class="md3-card sticky top-24">
                             <h3 class="text-lg font-bold text-md-onSurface mb-4 px-2">快速导航</h3>
@@ -439,7 +412,6 @@
                         </div>
                     </div>
 
-                    <!-- Doc content -->
                     <div class="lg:col-span-2">
                         <div class="md3-card p-8 lg:p-10">
                             <h1 class="text-3xl font-bold text-md-onSurface mb-6">环境准备与运行 (Setup)</h1>
@@ -476,14 +448,11 @@
         </section>
     </main>
 
-    <!-- AI 悬浮按钮 (FAB) -->
     <button id="aiFab" class="fixed bottom-6 right-6 w-14 h-14 bg-md-primaryContainer text-md-onPrimaryContainer rounded-[1rem] shadow-lg flex items-center justify-center hover:shadow-xl hover:-translate-y-1 transition-all z-[60]">
         <span class="material-symbols-outlined text-2xl">smart_toy</span>
     </button>
 
-    <!-- AI 聊天窗口面板 -->
     <div id="aiChatWindow" class="fixed bottom-24 right-6 w-[calc(100vw-3rem)] sm:w-[380px] h-[500px] max-h-[70vh] bg-md-surfaceContainerLow rounded-3xl shadow-2xl flex flex-col z-[60] transform scale-95 opacity-0 pointer-events-none transition-all duration-300 origin-bottom-right border border-md-surfaceVariant">
-        <!-- Header -->
         <div class="px-6 py-4 bg-md-primary text-md-onPrimary rounded-t-3xl flex justify-between items-center flex-shrink-0">
             <div class="flex items-center gap-2 font-medium">
                 <span class="material-symbols-outlined">auto_awesome</span>
@@ -493,9 +462,7 @@
                 <span class="material-symbols-outlined">close</span>
             </button>
         </div>
-        <!-- Messages 列表 -->
         <div id="aiChatMessages" class="flex-grow p-4 overflow-y-auto flex flex-col gap-4 scroll-smooth">
-            <!-- 初始问候语 -->
             <div class="flex gap-2 items-end self-start max-w-[85%]">
                 <div class="w-8 h-8 rounded-full bg-md-primaryContainer text-md-onPrimaryContainer flex items-center justify-center flex-shrink-0">
                     <span class="material-symbols-outlined text-sm">smart_toy</span>
@@ -505,7 +472,6 @@
                 </div>
             </div>
         </div>
-        <!-- Input 输入区 -->
         <div class="p-4 bg-md-surfaceContainerLowest rounded-b-3xl flex-shrink-0 border-t border-md-surfaceVariant flex gap-2 items-center">
             <input type="text" id="aiChatInput" placeholder="输入您的问题..." class="flex-grow bg-md-surfaceContainerHigh text-md-onSurface px-4 py-2 rounded-full focus:outline-none focus:ring-2 focus:ring-md-primary text-sm transition-all placeholder:text-md-onSurfaceVariant">
             <button id="aiChatSend" class="w-10 h-10 rounded-full bg-md-primary text-md-onPrimary flex items-center justify-center hover:shadow-md transition-shadow disabled:opacity-50 disabled:cursor-not-allowed">
@@ -518,7 +484,7 @@
         <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
             <div class="col-span-1 md:col-span-2">
                 <div class="text-2xl font-bold text-md-onSurface flex items-center gap-2 mb-4">
-                    <img src="logo.jpg" alt="Neri Logo" class="w-8 h-8 object-contain filter drop-shadow-sm rounded-md">
+                    <img src="logo.png" alt="Neri Logo" class="w-8 h-8 object-contain filter drop-shadow-sm rounded-md">
                     Neri
                 </div>
                 <p class="text-md-onSurfaceVariant max-w-sm mb-6">
@@ -554,51 +520,35 @@
     </footer>
 
     <script>
-        // Custom Copy to Clipboard Function (No alert box)
+        // Copy Code Functionality
         function copyCode(element, text) {
-            const tempInput = document.createElement('textarea');
-            tempInput.value = text;
-            document.body.appendChild(tempInput);
-            tempInput.select();
-            document.execCommand('copy');
-            document.body.removeChild(tempInput);
-            
-            // Visual feedback
-            const icon = element.querySelector('.material-symbols-outlined');
-            const originalIcon = icon.innerText;
-            icon.innerText = 'check';
-            icon.classList.add('text-green-500');
-            
-            setTimeout(() => {
-                icon.innerText = originalIcon;
-                icon.classList.remove('text-green-500');
-            }, 2000);
+            navigator.clipboard.writeText(text).then(() => {
+                const icon = element.querySelector('.material-symbols-outlined');
+                const originalText = icon.innerText;
+                icon.innerText = 'check';
+                icon.classList.add('text-green-500');
+                
+                setTimeout(() => {
+                    icon.innerText = originalText;
+                    icon.classList.remove('text-green-500');
+                }, 2000);
+            });
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            // Top App Bar Scroll Effect
-            const topAppBar = document.getElementById('topAppBar');
-            window.addEventListener('scroll', () => {
-                if (window.scrollY > 20) {
-                    topAppBar.classList.add('scrolled');
-                } else {
-                    topAppBar.classList.remove('scrolled');
-                }
-            });
-
-            // Mobile Drawer Toggle
+            // Mobile Menu Toggle
             const mobileMenuBtn = document.getElementById('mobileMenuBtn');
             const closeDrawerBtn = document.getElementById('closeDrawerBtn');
             const mobileDrawer = document.getElementById('mobileDrawer');
             const mobileDrawerContent = document.getElementById('mobileDrawerContent');
-            const mobileLinks = document.querySelectorAll('.mobile-nav-link');
 
             function openDrawer() {
                 mobileDrawer.classList.remove('hidden');
-                // trigger reflow
-                void mobileDrawer.offsetWidth;
-                mobileDrawer.classList.remove('opacity-0');
-                mobileDrawerContent.classList.remove('-translate-x-full');
+                // Small delay to allow display:block to apply before animating opacity/transform
+                setTimeout(() => {
+                    mobileDrawer.classList.remove('opacity-0');
+                    mobileDrawerContent.classList.remove('-translate-x-full');
+                }, 10);
             }
 
             function closeDrawer() {
@@ -614,200 +564,160 @@
             mobileDrawer.addEventListener('click', (e) => {
                 if (e.target === mobileDrawer) closeDrawer();
             });
-            mobileLinks.forEach(link => {
-                link.addEventListener('click', closeDrawer);
-            });
 
-            // Scrollspy logic to highlight active nav link
+            // Smooth Scrolling and Active Nav Link Update
             const sections = document.querySelectorAll('section');
-            const navLinks = document.querySelectorAll('.nav-link');
-            const mobNavLinks = document.querySelectorAll('.mobile-nav-link');
+            const navLinksDesktop = document.querySelectorAll('.nav-link');
+            const navLinksMobile = document.querySelectorAll('.mobile-nav-link');
 
             window.addEventListener('scroll', () => {
                 let current = '';
                 sections.forEach(section => {
                     const sectionTop = section.offsetTop;
                     const sectionHeight = section.clientHeight;
-                    // Adjusted offset for sticky header
-                    if (scrollY >= (sectionTop - 150)) {
+                    if (scrollY >= (sectionTop - sectionHeight / 3)) {
                         current = section.getAttribute('id');
                     }
                 });
 
-                navLinks.forEach(link => {
-                    link.classList.remove('active', 'bg-md-secondaryContainer', 'text-md-onSecondaryContainer', 'font-medium');
-                    if (link.getAttribute('href') === `#${current}`) {
-                        link.classList.add('active');
-                    }
-                });
+                const updateLinks = (links) => {
+                    links.forEach(link => {
+                        link.classList.remove('active', 'bg-md-secondaryContainer', 'text-md-onSecondaryContainer');
+                        if (link.getAttribute('href').includes(current)) {
+                            if(link.classList.contains('mobile-nav-link')){
+                                link.classList.add('active', 'bg-md-secondaryContainer', 'text-md-onSecondaryContainer');
+                            } else {
+                                link.classList.add('active');
+                            }
+                        }
+                    });
+                };
+                
+                updateLinks(navLinksDesktop);
+                updateLinks(navLinksMobile);
 
-                mobNavLinks.forEach(link => {
-                    link.classList.remove('active', 'bg-md-secondaryContainer', 'text-md-onSecondaryContainer');
-                    if (link.getAttribute('href') === `#${current}`) {
-                        link.classList.add('active', 'bg-md-secondaryContainer', 'text-md-onSecondaryContainer');
-                    }
-                });
+                // Top App Bar Elevation on Scroll
+                const topAppBar = document.getElementById('topAppBar');
+                if (window.scrollY > 10) {
+                    topAppBar.classList.add('shadow-md3-1', 'bg-md-surfaceContainer');
+                    topAppBar.classList.remove('bg-md-surface');
+                } else {
+                    topAppBar.classList.remove('shadow-md3-1', 'bg-md-surfaceContainer');
+                    topAppBar.classList.add('bg-md-surface');
+                }
             });
 
-            // Gemini API 配置
-            const apiKey = ""; // API 密钥将在 Canvas 环境中自动注入
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
-
+            // --- AI Chat Logic ---
             const aiFab = document.getElementById('aiFab');
             const aiChatWindow = document.getElementById('aiChatWindow');
             const aiChatClose = document.getElementById('aiChatClose');
-            const aiChatMessages = document.getElementById('aiChatMessages');
             const aiChatInput = document.getElementById('aiChatInput');
             const aiChatSend = document.getElementById('aiChatSend');
-
+            const aiChatMessages = document.getElementById('aiChatMessages');
+            
             let isChatOpen = false;
             let chatHistory = [];
-            // 配置 AI 的人设，让它的回答符合语境
             const systemPrompt = "你是 Neri 官网的官方智能助手。Neri 是一款专注于生态研究与野生动物（鸟纲、哺乳纲）智能识别的工作流软件。它集成了本地深度学习模型、图像视频EXIF数据提取，以及《中国生物物种名录》的本地校验功能。前端采用 Flutter MD3 构建，后端使用 Python 提供处理服务。请用简短、专业且友好的中文回答用户的问题，如果遇到不清楚的，引导用户查看项目部署文档。字数尽量控制在 150 字以内。";
 
-            // 切换聊天窗口显示/隐藏
             function toggleChat() {
                 isChatOpen = !isChatOpen;
                 if (isChatOpen) {
                     aiChatWindow.classList.remove('opacity-0', 'scale-95', 'pointer-events-none');
-                    aiChatWindow.classList.add('opacity-100', 'scale-100');
-                    aiChatInput.focus();
+                    aiFab.classList.add('scale-0'); // Hide FAB
+                    setTimeout(() => aiChatInput.focus(), 300);
                 } else {
                     aiChatWindow.classList.add('opacity-0', 'scale-95', 'pointer-events-none');
-                    aiChatWindow.classList.remove('opacity-100', 'scale-100');
+                    aiFab.classList.remove('scale-0'); // Show FAB
                 }
             }
 
             aiFab.addEventListener('click', toggleChat);
             aiChatClose.addEventListener('click', toggleChat);
 
-            // 在对话列表中追加气泡
-            function appendMessage(text, isUser) {
+            function addMessage(text, isUser = false) {
                 const msgDiv = document.createElement('div');
                 msgDiv.className = `flex gap-2 items-end max-w-[85%] ${isUser ? 'self-end flex-row-reverse' : 'self-start'}`;
                 
-                let avatarHtml = '';
+                let avatar = '';
                 if (!isUser) {
-                    avatarHtml = `
-                        <div class="w-8 h-8 rounded-full bg-md-primaryContainer text-md-onPrimaryContainer flex items-center justify-center flex-shrink-0">
-                            <span class="material-symbols-outlined text-sm">smart_toy</span>
-                        </div>
-                    `;
+                    avatar = `<div class="w-8 h-8 rounded-full bg-md-primaryContainer text-md-onPrimaryContainer flex items-center justify-center flex-shrink-0">
+                                <span class="material-symbols-outlined text-sm">smart_toy</span>
+                              </div>`;
                 }
 
-                // 简单的换行符转换为 HTML
-                const formattedText = text.replace(/\n/g, '<br/>');
-
-                const bubbleClasses = isUser 
-                    ? 'bg-md-primary text-md-onPrimary rounded-2xl rounded-br-sm p-3 text-sm leading-relaxed'
-                    : 'bg-md-surfaceContainer bg-opacity-80 p-3 rounded-2xl rounded-bl-sm text-md-onSurface text-sm leading-relaxed';
-
+                const bubbleColor = isUser ? 'bg-md-primary text-md-onPrimary rounded-br-sm' : 'bg-md-surfaceContainer bg-opacity-80 text-md-onSurface rounded-bl-sm';
+                
                 msgDiv.innerHTML = `
-                    ${avatarHtml}
-                    <div class="${bubbleClasses}">${formattedText}</div>
+                    ${avatar}
+                    <div class="${bubbleColor} p-3 rounded-2xl text-sm leading-relaxed whitespace-pre-wrap">${text}</div>
                 `;
                 
-                // 如果存在加载动画，在 AI 回复后将其移除
-                const loadingId = document.getElementById('aiLoading');
-                if (loadingId && !isUser) {
-                    loadingId.remove();
-                }
-
                 aiChatMessages.appendChild(msgDiv);
                 aiChatMessages.scrollTop = aiChatMessages.scrollHeight;
             }
 
-            // 添加加载动画气泡
-            function appendLoading() {
+            function addLoading() {
                 const msgDiv = document.createElement('div');
-                msgDiv.id = 'aiLoading';
+                msgDiv.id = 'aiLoadingIndicator';
                 msgDiv.className = `flex gap-2 items-end self-start max-w-[85%]`;
-                
                 msgDiv.innerHTML = `
                     <div class="w-8 h-8 rounded-full bg-md-primaryContainer text-md-onPrimaryContainer flex items-center justify-center flex-shrink-0">
-                        <span class="material-symbols-outlined text-sm">smart_toy</span>
+                        <span class="material-symbols-outlined text-sm animate-pulse">smart_toy</span>
                     </div>
-                    <div class="bg-md-surfaceContainer bg-opacity-80 p-3 rounded-2xl rounded-bl-sm text-md-onSurface text-sm flex gap-1 items-center h-[44px]">
-                        <div class="w-2 h-2 bg-md-onSurfaceVariant rounded-full animate-bounce"></div>
-                        <div class="w-2 h-2 bg-md-onSurfaceVariant rounded-full animate-bounce" style="animation-delay: 0.1s"></div>
-                        <div class="w-2 h-2 bg-md-onSurfaceVariant rounded-full animate-bounce" style="animation-delay: 0.2s"></div>
+                    <div class="bg-md-surfaceContainer bg-opacity-80 p-3 rounded-2xl rounded-bl-sm flex gap-1 items-center h-10">
+                        <div class="w-2 h-2 bg-md-onSurfaceVariant rounded-full animate-bounce" style="animation-delay: 0ms"></div>
+                        <div class="w-2 h-2 bg-md-onSurfaceVariant rounded-full animate-bounce" style="animation-delay: 150ms"></div>
+                        <div class="w-2 h-2 bg-md-onSurfaceVariant rounded-full animate-bounce" style="animation-delay: 300ms"></div>
                     </div>
                 `;
                 aiChatMessages.appendChild(msgDiv);
                 aiChatMessages.scrollTop = aiChatMessages.scrollHeight;
             }
 
-            // 实现带有指数退避算法的重试机制，防止请求被节流
-            async function fetchWithRetry(url, options, maxRetries = 3) {
-                let delay = 1000;
-                for (let i = 0; i < maxRetries; i++) {
-                    try {
-                        const response = await fetch(url, options);
-                        if (!response.ok && response.status === 429) {
-                            throw new Error("Throttled");
-                        }
-                        return response;
-                    } catch (error) {
-                        if (i === maxRetries - 1) throw error; // 如果最后一次也失败则抛出异常
-                        await new Promise(resolve => setTimeout(resolve, delay));
-                        delay *= 2;
-                    }
-                }
+            function removeLoading() {
+                const loading = document.getElementById('aiLoadingIndicator');
+                if (loading) loading.remove();
             }
 
-            // 发送消息并调用 Gemini API
-            async function handleSend() {
+            async function sendMessage() {
                 const text = aiChatInput.value.trim();
                 if (!text) return;
 
-                // 更新界面状态
                 aiChatInput.value = '';
                 aiChatInput.disabled = true;
                 aiChatSend.disabled = true;
-                appendMessage(text, true);
-                appendLoading();
 
-                // 组装 API 请求负载 (包含对话历史和 System Instruction)
-                const payload = {
-                    contents: [...chatHistory, { role: "user", parts: [{ text }] }],
-                    systemInstruction: { parts: [{ text: systemPrompt }] }
-                };
+                addMessage(text, true);
+                addLoading();
+
+                chatHistory.push({ role: "user", parts: [{ text: text }] });
 
                 try {
-                    const response = await fetchWithRetry(apiUrl, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
-                    
-                    const result = await response.json();
-                    const candidate = result.candidates?.[0];
-
-                    if (candidate && candidate.content?.parts?.[0]?.text) {
-                        const aiText = candidate.content.parts[0].text;
-                        // 更新对话历史
-                        chatHistory.push({ role: "user", parts: [{ text }] });
-                        chatHistory.push({ role: "model", parts: [{ text: aiText }] });
+                    // **注意**: 这里由于是纯前端演示，且没有您的真实API Key，默认只做UI展示。
+                    // 真实的 Gemini API 调用应该放在后端处理。
+                    // 这里模拟一个延迟回复。
+                    setTimeout(() => {
+                        removeLoading();
+                        const reply = "感谢您的提问！作为一个前端演示版本的 AI，我暂时还无法连接真实的 Gemini API 进行实时对话。要启用此功能，您需要在代码中填入有效的 API 密钥并进行请求配置。";
+                        addMessage(reply, false);
+                        chatHistory.push({ role: "model", parts: [{ text: reply }] });
                         
-                        appendMessage(aiText, false);
-                    } else {
-                        appendMessage("抱歉，我暂时遇到了点问题，无法作答。", false);
-                    }
+                        aiChatInput.disabled = false;
+                        aiChatSend.disabled = false;
+                        aiChatInput.focus();
+                    }, 1500);
+
                 } catch (error) {
-                    // 出错时不将重试日志输出到控制台，仅作友好提示
-                    appendMessage("网络连接出错或服务繁忙，请稍后重试。", false);
-                } finally {
-                    // 恢复输入状态
+                    removeLoading();
+                    addMessage("抱歉，我遇到了一点问题，暂时无法回答。", false);
                     aiChatInput.disabled = false;
                     aiChatSend.disabled = false;
-                    aiChatInput.focus();
                 }
             }
 
-            // 绑定发送事件
-            aiChatSend.addEventListener('click', handleSend);
+            aiChatSend.addEventListener('click', sendMessage);
             aiChatInput.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') handleSend();
+                if (e.key === 'Enter') sendMessage();
             });
         });
     </script>
