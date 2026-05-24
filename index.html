@@ -309,128 +309,194 @@
                 </div>
 
                 <div class="relative border-l-2 border-md-surfaceVariant ml-4 md:ml-0 md:pl-0">
+                    
+                    <!-- Update Item 1: v3.0.3-beta (高亮) -->
                     <div class="mb-12 relative pl-8 md:pl-0">
                         <div class="md:hidden absolute w-4 h-4 bg-md-primary rounded-full -left-[9px] top-1"></div>
                         <div class="md:flex items-start justify-between">
                             <div class="md:w-1/4 md:text-right md:pr-8 relative">
                                 <div class="hidden md:block absolute w-4 h-4 bg-md-primary rounded-full -right-[9px] top-1 shadow-[0_0_0_4px_theme('colors.md.surfaceContainer')]"></div>
-                                <h3 class="text-xl font-bold text-md-onSurface">v3.0.3-beta</h3>
-                                <p class="text-md-onSurfaceVariant text-sm mt-1">2026年05月23日</p>
-                                <span class="inline-block px-2 py-1 bg-md-primaryContainer text-md-onPrimaryContainer text-xs rounded-lg mt-2 font-medium">调试增强与优化</span>
+                                <h3 class="text-xl font-bold text-md-primary">✨ v3.0.3-beta</h3>
+                                <p class="text-md-onSurfaceVariant text-sm mt-1">2026.05.23</p>
+                                <span class="inline-block px-2 py-1 bg-md-primaryContainer text-md-onPrimaryContainer text-xs rounded-lg mt-2 font-medium">最新大版本</span>
                             </div>
                             <div class="md:w-3/4 md:pl-8 mt-4 md:mt-0">
-                                <div class="md3-card">
-                                    <h4 class="text-lg font-bold text-md-onSurface mb-3">全面优化体验与稳定性增强</h4>
-                                    <ul class="list-disc list-inside text-md-onSurfaceVariant space-y-2">
-                                        <li><strong>调试增强</strong>：新增调试模式页面，可直观查看前后端版本、运行平台及 GPU/PyTorch/YOLO 依赖状态，支持一键复制调试信息与读取日志。</li>
-                                        <li><strong>体验优化</strong>：优化全局加载与程序关闭流程；未检测到可用 GPU 时自动禁用 FP16 推理；开始界面任务提示改为显示处理路径。</li>
-                                        <li><strong>校验优化</strong>：物种分组按置信度动态重算，低阈值检测自动归入过滤分组，整组低于阈值直接显示为“空”。</li>
-                                        <li><strong>问题修复</strong>：修复了 Windows 端连接后端可能闪退的问题，以及部分权限场景下监听误判退出的异常。</li>
+                                <div class="md3-card border-2 border-md-primary shadow-sm bg-white">
+                                    <ul class="list-none text-md-onSurfaceVariant space-y-3">
+                                        <li class="flex gap-2"><span class="shrink-0">🖍️</span><span><strong>内容更新</strong>：设置页“软件更新”顶部新增当前版本信息；“项目信息”调整为“关于”，并提供版本号、更新说明、反馈建议和源代码入口；连续点击版本号可开启调试模式。</span></li>
+                                        <li class="flex gap-2"><span class="shrink-0">🧪</span><span><strong>调试增强</strong>：新增调试模式页面，可查看前端版本、后端版本、后端地址、运行平台、GPU/PyTorch 状态、YOLO 依赖状态；支持复制调试信息、查看已安装 Python 库以及读取软件日志，便于定位环境和依赖问题。</span></li>
+                                        <li class="flex gap-2"><span class="shrink-0">✅</span><span><strong>体验优化</strong>：优化启动连接后的全局加载状态，尽量等待初始页面数据加载完成后再关闭加载条；优化程序关闭流程，在 Python 后端已关闭或不可用时减少退出等待；未检测到可用 GPU 时自动禁用 FP16；开始界面删除任务提示改为显示处理路径和当前状态。</span></li>
+                                        <li class="flex gap-2"><span class="shrink-0">🧭</span><span><strong>校验优化</strong>：校验界面的物种分组会按当前置信度重新计算，低于阈值而被过滤的检测会归入过滤后的分组；当整组照片都低于阈值时直接显示为“空”，避免继续停留在原物种分组。</span></li>
+                                        <li class="flex gap-2"><span class="shrink-0">🔧</span><span><strong>问题修复</strong>：修复 Windows 端连接后端后可能闪退的问题；修复后端父进程监听在部分权限场景下可能误判退出的问题；调整主界面页面承载方式，降低 Windows 可访问性树更新异常对界面的影响。</span></li>
                                     </ul>
+                                    <div class="mt-5 p-3 bg-md-errorContainer/50 text-md-onErrorContainer text-sm rounded-xl border border-md-errorContainer/50">
+                                        <strong>⚠️ Warning：</strong> 部分avi格式视频可能无法识别，暂不支持windows7系统。对intel gpu的支持为实验性，在部分电脑上可能会报错。
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
+                    <!-- Update Item 2: v3.0.2-beta -->
                     <div class="mb-12 relative pl-8 md:pl-0">
                         <div class="md:hidden absolute w-4 h-4 bg-md-outline rounded-full -left-[9px] top-1"></div>
                         <div class="md:flex items-start justify-between">
                             <div class="md:w-1/4 md:text-right md:pr-8 relative">
                                 <div class="hidden md:block absolute w-4 h-4 bg-md-outline rounded-full -right-[9px] top-1 shadow-[0_0_0_4px_theme('colors.md.surfaceContainer')]"></div>
-                                <h3 class="text-xl font-bold text-md-onSurface">v2.0.5-beta</h3>
-                                <p class="text-md-onSurfaceVariant text-sm mt-1">2025年09月17日</p>
+                                <h3 class="text-xl font-bold text-md-onSurface">v3.0.2-beta</h3>
+                                <p class="text-md-onSurfaceVariant text-sm mt-1">2026年05月20日</p>
                             </div>
                             <div class="md:w-3/4 md:pl-8 mt-4 md:mt-0">
                                 <div class="md3-card bg-md-surfaceContainerLow">
-                                    <h4 class="text-lg font-bold text-md-onSurface mb-3">界面交互与逻辑修复</h4>
-                                    <ul class="list-disc list-inside text-md-onSurfaceVariant space-y-2">
-                                        <li>修复了浅色模式下导出设置复选框无法勾选的 Bug，并重新设计了复选框样式。</li>
-                                        <li>修复了快速标记设置中点击“增加”后序号显示不正确的 Bug。</li>
-                                        <li>修复了快速标记设置中先“增加”后立即点击“删除”失效的逻辑问题。</li>
+                                    <ul class="list-none text-md-onSurfaceVariant space-y-3">
+                                        <li class="flex gap-2"><span class="shrink-0">🖍️</span><span><strong>内容更新</strong>：校验界面支持批量撤回，可一次撤回最近多步校验操作；设置 → 基础设置新增“撤回步数”配置，支持设置一次撤回的步数；后端新增批量校验标记接口，用于快速标记、批量标记和批量撤回。</span></li>
+                                        <li class="flex gap-2"><span class="shrink-0">✅</span><span><strong>体验优化</strong>：快速标记和批量标记改为批量提交，减少大量单项请求导致的加载末尾卡顿；校验界面空状态下，“重新获取”按钮会在加载时显示加载状态；检测依赖未安装时，检测设置中的“安装依赖”会弹窗确认并自动检测安装，不再跳转到环境维护；开始界面在检测依赖未安装时，会禁用模型文件、分类模型、视频处理、FP16、置信度、IOU 等检测相关设置；校验界面“其他”按钮高度与刷新/撤回按钮保持一致，物种按钮和数字按钮恢复原高度。</span></li>
+                                        <li class="flex gap-2"><span class="shrink-0">🔧</span><span><strong>问题修复</strong>：修复撤回只能撤回上一步的问题；修复校验界面部分按钮高度不一致的问题；修复检测依赖缺失时，设置页安装路径不够直观的问题</span></li>
                                     </ul>
+                                    <div class="mt-4 p-3 bg-md-errorContainer/30 text-md-onErrorContainer text-sm rounded-xl">
+                                        <strong>⚠️ Warning：</strong> 部分avi格式视频可能无法识别，暂不支持windows7系统。对intel gpu的支持为实验性，在部分电脑上可能会报错。
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
+                    <!-- Update Item 3: v3.0.1-beta -->
                     <div class="mb-12 relative pl-8 md:pl-0">
                         <div class="md:hidden absolute w-4 h-4 bg-md-outline rounded-full -left-[9px] top-1"></div>
                         <div class="md:flex items-start justify-between">
                             <div class="md:w-1/4 md:text-right md:pr-8 relative">
                                 <div class="hidden md:block absolute w-4 h-4 bg-md-outline rounded-full -right-[9px] top-1 shadow-[0_0_0_4px_theme('colors.md.surfaceContainer')]"></div>
-                                <h3 class="text-xl font-bold text-md-onSurface">v2.0.4-beta</h3>
-                                <p class="text-md-onSurfaceVariant text-sm mt-1">2025年09月16日</p>
+                                <h3 class="text-xl font-bold text-md-onSurface">v3.0.1-beta</h3>
+                                <p class="text-md-onSurfaceVariant text-sm mt-1">2026年05月18日</p>
                             </div>
                             <div class="md:w-3/4 md:pl-8 mt-4 md:mt-0">
-                                <div class="md3-card bg-md-surfaceContainerLowest">
-                                    <h4 class="text-lg font-bold text-md-onSurface mb-3">名录升级与自定义导出</h4>
-                                    <ul class="list-disc list-inside text-md-onSurfaceVariant space-y-2">
-                                        <li>数据表大幅增强：新增目、科、属及其拉丁名列，数据源全面对接 <strong>《中国生物物种名录》2026版</strong>。</li>
-                                        <li>新增高级设置：用户现在可以自由勾选和配置需要导出的数据字段。</li>
+                                <div class="md3-card bg-md-surfaceContainerLow">
+                                    <ul class="list-none text-md-onSurfaceVariant space-y-3">
+                                        <li class="flex gap-2"><span class="shrink-0">🖍️</span><span><strong>内容更新</strong>：移植部分功能，完善部分交互。</span></li>
+                                        <li class="flex gap-2"><span class="shrink-0">🔧</span><span><strong>问题修复</strong>：修复了部分bug。</span></li>
                                     </ul>
+                                    <div class="mt-4 p-3 bg-md-errorContainer/30 text-md-onErrorContainer text-sm rounded-xl">
+                                        <strong>⚠️ Warning：</strong> 此版本更新幅度较大，安装时请删除原先的应用程序！！！对intel gpu的支持为实验性，在部分电脑上可能会报错。
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+                    <!-- Update Item 4: v3.0.0-beta -->
+                    <div class="mb-12 relative pl-8 md:pl-0">
+                        <div class="md:hidden absolute w-4 h-4 bg-md-outline rounded-full -left-[9px] top-1"></div>
+                        <div class="md:flex items-start justify-between">
+                            <div class="md:w-1/4 md:text-right md:pr-8 relative">
+                                <div class="hidden md:block absolute w-4 h-4 bg-md-outline rounded-full -right-[9px] top-1 shadow-[0_0_0_4px_theme('colors.md.surfaceContainer')]"></div>
+                                <h3 class="text-xl font-bold text-md-onSurface">v3.0.0-beta</h3>
+                                <p class="text-md-onSurfaceVariant text-sm mt-1">2026年05月17日</p>
+                            </div>
+                            <div class="md:w-3/4 md:pl-8 mt-4 md:mt-0">
+                                <div class="md3-card bg-md-surfaceContainerLow">
+                                    <ul class="list-none text-md-onSurfaceVariant space-y-3">
+                                        <li class="flex gap-2"><span class="shrink-0">🖍️</span><span><strong>内容更新</strong>：使用flutter编写md3风格的前端，应用界面流畅程度增加。当前版本为beta版本，大部分功能已迁移完成但尚未经过测试，请谨慎使用。</span></li>
+                                    </ul>
+                                    <div class="mt-4 p-3 bg-md-errorContainer/30 text-md-onErrorContainer text-sm rounded-xl">
+                                        <strong>⚠️ Warning：</strong> 此版本更新幅度较大，安装时请删除原先的应用程序！！！对intel gpu的支持为实验性，在部分电脑上可能会报错。
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
                 
-                <div class="mt-12 text-center">
-                    <p class="text-sm text-md-error flex items-center justify-center gap-1 font-medium bg-md-errorContainer text-md-onErrorContainer inline-flex px-4 py-2 rounded-full">
-                        <span class="material-symbols-outlined text-sm">warning</span>
-                        提示：部分 avi 格式视频可能无法识别，暂不支持 Windows 7 系统。对 Intel GPU 的支持为实验性。
-                    </p>
+                <!-- 新增的查看更多按钮 -->
+                <div class="mt-12 flex justify-center">
+                    <a href="https://github.com/wakin721/Neri/blob/main/res/demo/README_Update.md" target="_blank" class="md3-btn md3-btn-tonal px-8 py-3 text-base">
+                        <span class="material-symbols-outlined">history</span>
+                        查看更多
+                    </a>
                 </div>
+
             </div>
         </section>
 
         <section id="docs" class="py-24 bg-md-surface px-4 sm:px-6 lg:px-8">
             <div class="max-w-7xl mx-auto">
                 <div class="text-center mb-16">
-                    <h2 class="text-3xl md:text-4xl font-bold text-md-onSurface mb-4">源码部署与文档</h2>
-                    <p class="text-md-onSurfaceVariant text-lg">快速在本地构建 Neri 前后端开发环境。</p>
+                    <h2 class="text-3xl md:text-4xl font-bold text-md-onSurface mb-4">使用文档与配置指南</h2>
+                    <p class="text-md-onSurfaceVariant text-lg">快速了解 Neri 的核心功能与加速配置。</p>
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- Sidebar menu -->
                     <div class="lg:col-span-1">
                         <div class="md3-card sticky top-24">
                             <h3 class="text-lg font-bold text-md-onSurface mb-4 px-2">快速导航</h3>
                             <nav class="flex flex-col space-y-1">
-                                <a href="javascript:void(0)" class="px-4 py-3 rounded-full bg-md-secondaryContainer text-md-onSecondaryContainer font-medium">环境准备 (Setup)</a>
-                                <a href="javascript:void(0)" class="px-4 py-3 rounded-full text-md-onSurfaceVariant hover:bg-md-surfaceVariant transition-colors">Python 后端运行</a>
-                                <a href="javascript:void(0)" class="px-4 py-3 rounded-full text-md-onSurfaceVariant hover:bg-md-surfaceVariant transition-colors">Flutter 前端编译</a>
-                                <a href="javascript:void(0)" class="px-4 py-3 rounded-full text-md-onSurfaceVariant hover:bg-md-surfaceVariant transition-colors">关于 Launcher</a>
+                                <a href="#doc-intro" class="doc-nav-link px-4 py-3 rounded-full bg-md-secondaryContainer text-md-onSecondaryContainer font-medium transition-colors">项目简介</a>
+                                <a href="#doc-settings" class="doc-nav-link px-4 py-3 rounded-full text-md-onSurfaceVariant hover:bg-md-surfaceVariant font-medium transition-colors">核心检测设置</a>
+                                <a href="#doc-cuda" class="doc-nav-link px-4 py-3 rounded-full text-md-onSurfaceVariant hover:bg-md-surfaceVariant font-medium transition-colors">使用 CUDA 加速</a>
                             </nav>
                         </div>
                     </div>
 
+                    <!-- Doc content -->
                     <div class="lg:col-span-2">
-                        <div class="md3-card p-8 lg:p-10">
-                            <h1 class="text-3xl font-bold text-md-onSurface mb-6">环境准备与运行 (Setup)</h1>
-                            
+                        <div class="md3-card p-8 lg:p-10 scroll-smooth">
                             <div class="prose prose-slate max-w-none text-md-onSurfaceVariant">
-                                <p class="text-lg mb-6">Neri 的架构分为前端 (Flutter Desktop) 和后端 (Python AI/数据处理服务)。请确保您的开发机器已安装 Python 3.10+ 和 Flutter SDK。</p>
                                 
-                                <h3 class="text-xl font-bold text-md-onSurface mt-8 mb-4">1. 安装 Python 依赖</h3>
-                                <p class="mb-4">在项目根目录下，使用 pip 安装 requirements.txt 中的包（主要包含 PyTorch, OpenCV 等推理与图像处理库）：</p>
-                                <div class="bg-md-surfaceContainerHighest text-md-onSurface p-4 rounded-xl font-mono text-sm mb-6 flex justify-between items-center group cursor-pointer" onclick="copyCode(this, 'pip install -r requirements.txt')">
-                                    <code>pip install -r requirements.txt</code>
-                                    <span class="material-symbols-outlined text-md-outline group-hover:text-md-primary transition-colors">content_copy</span>
-                                </div>
+                                <h2 id="doc-intro" class="text-2xl font-bold text-md-onSurface mb-4 flex items-center gap-2 pt-4">
+                                    <span class="material-symbols-outlined text-md-primary">info</span>项目简介
+                                </h2>
+                                <p class="text-base mb-8 leading-relaxed">
+                                    <strong>Neri (NERI Enables Rapid Identification)</strong> 是一款专为处理红外相机影像数据设计的智能桌面应用。它基于 YOLO (You Only Look Once) 目标检测模型，能够高效、自动地识别和处理大批量由红外相机拍摄的野生动物照片。本工具旨在为生态保护工作者、野生动物研究人员和爱好者提供一个强大的数据整理和分析平台，将繁琐的手动筛选工作自动化，极大地提升科研和监测效率。
+                                </p>
 
-                                <h3 class="text-xl font-bold text-md-onSurface mt-8 mb-4">2. 资源与模型就绪</h3>
-                                <p class="mb-4">确保您的 <code>/res</code> 目录下存在所需模型与字体文件：</p>
-                                <ul class="list-disc list-inside mb-4">
-                                    <li><code>res/model/26m_p2_0224.pt</code> (检测模型)</li>
-                                    <li><code>res/species_database.db</code> (本地名录数据库)</li>
+                                <hr class="border-md-surfaceVariant my-8">
+
+                                <h2 id="doc-settings" class="text-2xl font-bold text-md-onSurface mb-4 flex items-center gap-2 pt-4">
+                                    <span class="material-symbols-outlined text-md-primary">settings</span>核心检测设置
+                                </h2>
+                                
+                                <h3 class="text-lg font-bold text-md-onSurface mt-6 mb-3">模型加速选项</h3>
+                                <ul class="list-disc list-inside mb-6 space-y-2">
+                                    <li><strong>使用FP16加速：</strong> 使用半精度浮点数进行推理，可以加快速度但可能会略微降低精度。需要兼容的 NVIDIA GPU。</li>
                                 </ul>
 
-                                <h3 class="text-xl font-bold text-md-onSurface mt-8 mb-4">3. 启动前端 Flutter 应用</h3>
-                                <p class="mb-4">进入 <code>frontend</code> 目录并获取依赖，最后启动桌面端：</p>
-                                <div class="bg-md-surfaceContainerHighest text-md-onSurface p-4 rounded-xl font-mono text-sm mb-6 flex justify-between items-center group cursor-pointer" onclick="copyCode(this, 'cd frontend\nflutter pub get\nflutter run -d windows')">
-                                    <code>cd frontend<br/>flutter pub get<br/>flutter run -d windows</code>
-                                    <span class="material-symbols-outlined text-md-outline group-hover:text-md-primary transition-colors">content_copy</span>
+                                <h3 class="text-lg font-bold text-md-onSurface mt-6 mb-3">高级检测选项</h3>
+                                <ul class="list-disc list-inside mb-6 space-y-2">
+                                    <li><strong>使用数据增强 (TTA)：</strong> 在测试时使用数据增强，通过对输入图像进行多种变换并综合结果，可能会提高准确性，但会显著降低处理速度。</li>
+                                    <li><strong>使用类别无关 NMS：</strong> 在所有类别上一起执行 NMS，对于检测多种相互重叠的物种可能有用。</li>
+                                </ul>
+
+                                <h3 class="text-lg font-bold text-md-onSurface mt-6 mb-3">视频检测设置</h3>
+                                <ul class="list-disc list-inside mb-8 space-y-2">
+                                    <li><strong>帧间隔：</strong> 设置视频处理时的跳帧间隔，以加快处理视频的速度。</li>
+                                    <li><strong>最低帧数比例：</strong> 如果某个目标（TrackID）在视频中出现的总帧数占视频总帧数的比例过低，则该目标将被视为误检或无效目标，不会在结果中显示。</li>
+                                </ul>
+
+                                <hr class="border-md-surfaceVariant my-8">
+
+                                <h2 id="doc-cuda" class="text-2xl font-bold text-md-onSurface mb-4 flex items-center gap-2 pt-4">
+                                    <span class="material-symbols-outlined text-md-primary">memory</span>使用 CUDA 加速
+                                </h2>
+                                <p class="mb-4">
+                                    建议（但非强制）你的 Windows 系统配备 NVIDIA GPU，因为这样能使用更高精度的模型，且更加快速。
+                                </p>
+                                
+                                <div class="bg-md-surfaceContainerLow border border-md-surfaceVariant p-4 rounded-xl mb-6">
+                                    <p class="mb-2 font-medium text-md-onSurface flex items-center gap-1">
+                                        <span class="material-symbols-outlined text-md-primary text-sm">auto_awesome</span>
+                                        自动安装机制
+                                    </p>
+                                    <p class="text-sm">在第一次运行程序的时候会自动检测 NVIDIA 显卡和 CUDA 并且尝试自动安装对应版本的 Pytorch，若安装失败，可尝试手动安装。</p>
                                 </div>
-                                <p class="text-sm text-md-onSurfaceVariant mt-2">注：在生产环境中，您可以通过编译 <code>launcher.c</code> 来一键启动前后端进程。</p>
+
+                                <h3 class="text-lg font-bold text-md-onSurface mt-6 mb-3">如何查看 CUDA 版本并且安装 CUDA 支持的 Pytorch？</h3>
+                                <ol class="list-decimal list-inside space-y-3 bg-md-surfaceContainerHighest p-5 rounded-2xl text-md-onSurface">
+                                    <li>右键点击桌面，选择 <strong>“NVIDIA 控制面板”</strong>。</li>
+                                    <li>在控制面板的菜单栏中，选择 <strong>“帮助”</strong>，然后点击 <strong>“系统信息”</strong>。</li>
+                                    <li>在弹出的窗口中查看组件选项卡，即可找到支持的 CUDA 版本信息。</li>
+                                </ol>
                             </div>
                         </div>
                     </div>
@@ -558,8 +624,10 @@
             const sections = document.querySelectorAll('section');
             const navLinksDesktop = document.querySelectorAll('.nav-link');
             const navLinksMobile = document.querySelectorAll('.mobile-nav-link');
+            const docNavLinks = document.querySelectorAll('.doc-nav-link');
 
             window.addEventListener('scroll', () => {
+                // 主页面板块的高亮逻辑
                 let current = '';
                 sections.forEach(section => {
                     const sectionTop = section.offsetTop;
@@ -584,6 +652,42 @@
                 
                 updateLinks(navLinksDesktop);
                 updateLinks(navLinksMobile);
+
+                // --- 部署文档内部快速导航的高亮逻辑 ---
+                const docTargets = ['doc-intro', 'doc-settings', 'doc-cuda'];
+                let activeDoc = '';
+
+                // 检测哪个文档标题正处于屏幕上方可见区域
+                for (const targetId of docTargets) {
+                    const targetElement = document.getElementById(targetId);
+                    if (targetElement) {
+                        const rect = targetElement.getBoundingClientRect();
+                        // 考虑到顶部有导航栏，设置 200px 的触发偏移量
+                        if (rect.top <= 200) {
+                            activeDoc = targetId;
+                        }
+                    }
+                }
+
+                // 如果位于文档区域最顶部还没越过第一段，默认选中第一个
+                if (!activeDoc && document.getElementById('doc-intro')?.getBoundingClientRect().top > 0) {
+                    activeDoc = 'doc-intro';
+                }
+
+                if (activeDoc) {
+                    docNavLinks.forEach(link => {
+                        if (link.getAttribute('href') === `#${activeDoc}`) {
+                            // 选中状态
+                            link.classList.add('bg-md-secondaryContainer', 'text-md-onSecondaryContainer');
+                            link.classList.remove('text-md-onSurfaceVariant', 'hover:bg-md-surfaceVariant');
+                        } else {
+                            // 未选中状态
+                            link.classList.remove('bg-md-secondaryContainer', 'text-md-onSecondaryContainer');
+                            link.classList.add('text-md-onSurfaceVariant', 'hover:bg-md-surfaceVariant');
+                        }
+                    });
+                }
+                // ----------------------------------------
 
                 const topAppBar = document.getElementById('topAppBar');
                 if (window.scrollY > 10) {
