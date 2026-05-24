@@ -301,8 +301,8 @@
                         <span class="material-symbols-outlined">rocket_launch</span>
                         获取最新版本
                     </a>
-                    <a href="#docs" class="md3-btn md3-btn-tonal text-base px-8 py-3 w-full sm:w-auto">
-                        <span class="material-symbols-outlined">menu_book</span>
+                    <a href="https://github.com/wakin721/Neri" target="_blank" class="md3-btn md3-btn-tonal text-base px-8 py-3 w-full sm:w-auto">
+                        <span class="material-symbols-outlined">code</span>
                         源码与部署
                     </a>
                 </div>
@@ -617,8 +617,9 @@
                     致力于提供最高效、最现代化的生态影像数据处理解决方案。由 Flutter 与 Python 强力驱动。
                 </p>
                 <div class="flex gap-4">
-                    <a href="https://github.com/wakin721/Neri" target="_blank" class="w-10 h-10 rounded-full bg-md-surfaceContainerLow flex items-center justify-center text-md-onSurface hover:bg-md-primaryContainer hover:text-md-onPrimaryContainer transition-colors duration-300">
+                    <a href="https://github.com/wakin721/Neri" target="_blank" class="px-4 py-2 rounded-full bg-md-surfaceContainerLow flex items-center gap-2 text-md-onSurface hover:bg-md-primaryContainer hover:text-md-onPrimaryContainer transition-colors duration-300 font-medium">
                         <span class="material-symbols-outlined">code</span>
+                        获取源代码
                     </a>
                 </div>
             </div>
@@ -930,7 +931,7 @@
                     // 将用户消息推入对话历史
                     chatHistory.push({ role: "user", content: text });
 
-                    if (!DEEPSEEK_API_KEY || DEEPSEEK_API_KEY === "您的API密钥填入此处") {
+                    if (!DEEPSEEK_API_KEY || DEEPSEEK_API_KEY === "sk-c064f017f1534e89b263c6ab2ef96f92") {
                         removeLoading();
                         addMessage("提示：未检测到有效的 API 密钥。请在源码中将 DEEPSEEK_API_KEY 替换为您真实的 sk- 开头的密钥。", false);
                         aiChatInput.disabled = false;
