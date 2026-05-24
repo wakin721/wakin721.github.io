@@ -931,7 +931,7 @@
                     // 将用户消息推入对话历史
                     chatHistory.push({ role: "user", content: text });
 
-                    if (!DEEPSEEK_API_KEY || DEEPSEEK_API_KEY === "sk-c064f017f1534e89b263c6ab2ef96f92") {
+                    if (!DEEPSEEK_API_KEY || DEEPSEEK_API_KEY === "") {
                         removeLoading();
                         addMessage("提示：未检测到有效的 API 密钥。请在源码中将 DEEPSEEK_API_KEY 替换为您真实的 sk- 开头的密钥。", false);
                         aiChatInput.disabled = false;
