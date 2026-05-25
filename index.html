@@ -381,14 +381,14 @@
                     <p class="text-md-onSurfaceVariant text-lg transition-colors duration-300">Neri 一直在快速进化中。</p>
                 </div>
 
-                <div class="relative border-l-2 border-md-surfaceVariant ml-4 md:ml-0 md:pl-0 transition-colors duration-300">
+                <div id="changelogTimeline" class="relative border-l-2 border-md-surfaceVariant ml-4 md:ml-0 md:pl-0 transition-colors duration-300">
                     
                     <div class="mb-12 relative pl-8 md:pl-0">
                         <div class="md:hidden absolute w-4 h-4 bg-md-primary rounded-full -left-[9px] top-1"></div>
                         <div class="md:flex items-start justify-between">
                             <div class="md:w-1/4 md:text-right md:pr-8 relative">
                                 <div class="hidden md:block absolute w-4 h-4 bg-md-primary rounded-full -right-[9px] top-1 shadow-[0_0_0_4px_var(--md-surfaceContainer)] transition-shadow duration-300"></div>
-                                <h3 class="text-xl font-bold text-md-primary transition-colors duration-300">✨ v3.0.3-beta</h3>
+                                <h3 class="text-xl font-bold text-md-primary transition-colors duration-300">v3.0.3-beta</h3>
                                 <p class="text-md-onSurfaceVariant text-sm mt-1 transition-colors duration-300">2026.05.23</p>
                                 <span class="inline-block px-2 py-1 bg-md-primaryContainer text-md-onPrimaryContainer text-xs rounded-lg mt-2 font-medium transition-colors duration-300">最新大版本</span>
                             </div>
@@ -445,27 +445,6 @@
                                     <ul class="list-none text-md-onSurfaceVariant space-y-3 transition-colors duration-300">
                                         <li class="flex gap-2"><span class="shrink-0">🖍️</span><span><strong>内容更新</strong>：移植部分功能，完善部分交互。</span></li>
                                         <li class="flex gap-2"><span class="shrink-0">🔧</span><span><strong>问题修复</strong>：修复了部分bug。</span></li>
-                                    </ul>
-                                    <div class="mt-4 p-3 bg-md-errorContainer/30 text-md-onErrorContainer text-sm rounded-xl transition-colors duration-300">
-                                        <strong>⚠️ Warning：</strong> 此版本更新幅度较大，安装时请删除原先的应用程序！！！对intel gpu的支持为实验性，在部分电脑上可能会报错。
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="mb-12 relative pl-8 md:pl-0">
-                        <div class="md:hidden absolute w-4 h-4 bg-md-outline rounded-full -left-[9px] top-1"></div>
-                        <div class="md:flex items-start justify-between">
-                            <div class="md:w-1/4 md:text-right md:pr-8 relative">
-                                <div class="hidden md:block absolute w-4 h-4 bg-md-outline rounded-full -right-[9px] top-1 shadow-[0_0_0_4px_var(--md-surfaceContainer)] transition-shadow duration-300"></div>
-                                <h3 class="text-xl font-bold text-md-onSurface transition-colors duration-300">v3.0.0-beta</h3>
-                                <p class="text-md-onSurfaceVariant text-sm mt-1 transition-colors duration-300">2026年05月17日</p>
-                            </div>
-                            <div class="md:w-3/4 md:pl-8 mt-4 md:mt-0">
-                                <div class="md3-card bg-md-surfaceContainerLow">
-                                    <ul class="list-none text-md-onSurfaceVariant space-y-3 transition-colors duration-300">
-                                        <li class="flex gap-2"><span class="shrink-0">🖍️</span><span><strong>内容更新</strong>：使用flutter编写md3风格的前端，应用界面流畅程度增加。当前版本为beta版本，大部分功能已迁移完成但尚未经过测试，请谨慎使用。</span></li>
                                     </ul>
                                     <div class="mt-4 p-3 bg-md-errorContainer/30 text-md-onErrorContainer text-sm rounded-xl transition-colors duration-300">
                                         <strong>⚠️ Warning：</strong> 此版本更新幅度较大，安装时请删除原先的应用程序！！！对intel gpu的支持为实验性，在部分电脑上可能会报错。
@@ -669,7 +648,207 @@
             }
         });
 
+        // --- GitHub README 更新日志同步 ---
+        const CHANGELOG_MARKDOWN_URL = 'https://raw.githubusercontent.com/wakin721/Neri/main/res/demo/README_Update.md';
+
+        function escapeHTML(value) {
+            return String(value).replace(/[&<>"']/g, (char) => ({
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#39;'
+            }[char]));
+        }
+
+        function formatInlineMarkdown(value) {
+            const linked = escapeHTML(value).replace(
+                /(https?:\/\/[^\s<]+)/g,
+                '<a href="$1" target="_blank" rel="noopener noreferrer" class="text-md-primary hover:underline">$1</a>'
+            );
+
+            return linked.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+        }
+
+        function normalizeChangelogDate(value) {
+            const date = value.trim();
+            const chineseDate = date.match(/(\d{1,2})月(\d{1,2})日[，,]\s*(\d{4})年/);
+
+            if (chineseDate) {
+                const [, month, day, year] = chineseDate;
+                return `${year}年${month.padStart(2, '0')}月${day.padStart(2, '0')}日`;
+            }
+
+            return date;
+        }
+
+        function isLikelyReleaseDate(value) {
+            return /\d{4}[./-]\d{1,2}[./-]\d{1,2}/.test(value)
+                || /\d{1,2}月\d{1,2}日/.test(value);
+        }
+
+        function normalizeChangelogVersion(value) {
+            const version = value.trim();
+
+            if (/^\d/.test(version)) {
+                return `v${version}`;
+            }
+
+            return version;
+        }
+
+        function parseChangelogHeader(header) {
+            const headerText = header.replace(/^##\s+/, '').trim();
+            const neriVersionMatch = headerText.match(/Neri\s*(.+?)\s*更新日志/i);
+            const versionMatch = headerText.match(/v?\d+(?:\.\d+)+(?:-[\w.]+)?(?:\([^)]+\))?/i);
+            const parenthesizedValues = [...headerText.matchAll(/\(([^)]+)\)/g)].map((match) => match[1].trim());
+            const parenthesizedDate = [...parenthesizedValues].reverse().find(isLikelyReleaseDate)
+                || parenthesizedValues[parenthesizedValues.length - 1];
+            const colonDate = headerText.match(/[：:]\s*(.+)$/);
+            const version = neriVersionMatch
+                ? normalizeChangelogVersion(neriVersionMatch[1])
+                : versionMatch
+                    ? normalizeChangelogVersion(versionMatch[0])
+                    : headerText;
+            const date = normalizeChangelogDate(parenthesizedDate || colonDate?.[1] || '');
+
+            return { version, date };
+        }
+
+        function parseChangelogRelease(section) {
+            const lines = section.replace(/\r/g, '').split('\n');
+            const header = lines.shift() || '';
+            const { version, date } = parseChangelogHeader(header);
+            const items = [];
+            const warningLines = [];
+            let currentItem = '';
+
+            const flushItem = () => {
+                const text = currentItem.trim();
+                if (text) items.push(text);
+                currentItem = '';
+            };
+
+            lines.forEach((line) => {
+                const trimmed = line.trim();
+
+                if (!trimmed || trimmed === '---') {
+                    flushItem();
+                    return;
+                }
+
+                if (trimmed.startsWith('>')) {
+                    flushItem();
+                    warningLines.push(trimmed.replace(/^>\s?/, ''));
+                    return;
+                }
+
+                if (/^\d+\.\s+/.test(trimmed) || /^[-*]\s+/.test(trimmed)) {
+                    flushItem();
+                    currentItem = trimmed.replace(/^\d+\.\s+/, '').replace(/^[-*]\s+/, '');
+                    return;
+                }
+
+                if (/^#{1,6}\s+/.test(trimmed)) {
+                    flushItem();
+                    currentItem = trimmed.replace(/^#{1,6}\s+/, '');
+                    return;
+                }
+
+                currentItem = currentItem ? `${currentItem} ${trimmed}` : trimmed;
+            });
+
+            flushItem();
+
+            return {
+                version,
+                date,
+                items,
+                warning: warningLines.join(' ')
+            };
+        }
+
+        function parseChangelogMarkdown(markdown) {
+            return markdown
+                .split(/\n(?=##\s+)/)
+                .map((section) => section.trim())
+                .filter((section) => section.startsWith('## '))
+                .slice(0, 3)
+                .map(parseChangelogRelease);
+        }
+
+        function renderChangelogItem(text) {
+            const markerMatch = text.match(/^([^\p{L}\p{N}*#\[]+)\s*/u);
+            const marker = markerMatch?.[1]?.trim() || '•';
+            const content = markerMatch ? text.slice(markerMatch[0].length) : text;
+
+            return `
+                <li class="flex gap-2">
+                    <span class="shrink-0">${escapeHTML(marker)}</span>
+                    <span>${formatInlineMarkdown(content)}</span>
+                </li>
+            `;
+        }
+
+        function renderChangelogRelease(release, index) {
+            const isLatest = index === 0;
+            const dotClass = isLatest ? 'bg-md-primary' : 'bg-md-outline';
+            const titleClass = isLatest ? 'text-md-primary' : 'text-md-onSurface';
+            const cardClass = isLatest
+                ? 'md3-card border-2 border-md-primary shadow-sm bg-md-surfaceContainerLowest'
+                : 'md3-card bg-md-surfaceContainerLow';
+            const warningClass = isLatest
+                ? 'mt-5 p-3 bg-md-errorContainer text-md-onErrorContainer text-sm rounded-xl border border-md-error transition-colors duration-300'
+                : 'mt-4 p-3 bg-md-errorContainer/30 text-md-onErrorContainer text-sm rounded-xl transition-colors duration-300';
+
+            return `
+                <div class="mb-12 relative pl-8 md:pl-0">
+                    <div class="md:hidden absolute w-4 h-4 ${dotClass} rounded-full -left-[9px] top-1"></div>
+                    <div class="md:flex items-start justify-between">
+                        <div class="md:w-1/4 md:text-right md:pr-8 relative">
+                            <div class="hidden md:block absolute w-4 h-4 ${dotClass} rounded-full -right-[9px] top-1 shadow-[0_0_0_4px_var(--md-surfaceContainer)] transition-shadow duration-300"></div>
+                            <h3 class="text-xl font-bold ${titleClass} transition-colors duration-300">${escapeHTML(release.version)}</h3>
+                            ${release.date ? `<p class="text-md-onSurfaceVariant text-sm mt-1 transition-colors duration-300">${escapeHTML(release.date)}</p>` : ''}
+                            ${isLatest ? '<span class="inline-block px-2 py-1 bg-md-primaryContainer text-md-onPrimaryContainer text-xs rounded-lg mt-2 font-medium transition-colors duration-300">最新版本</span>' : ''}
+                        </div>
+                        <div class="md:w-3/4 md:pl-8 mt-4 md:mt-0">
+                            <div class="${cardClass}">
+                                <ul class="list-none text-md-onSurfaceVariant space-y-3 transition-colors duration-300">
+                                    ${release.items.map(renderChangelogItem).join('')}
+                                </ul>
+                                ${release.warning ? `<div class="${warningClass}">${formatInlineMarkdown(release.warning)}</div>` : ''}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        async function loadChangelogFromGitHub() {
+            const timeline = document.getElementById('changelogTimeline');
+            if (!timeline) return;
+
+            try {
+                const response = await fetch(CHANGELOG_MARKDOWN_URL, { cache: 'no-store' });
+                if (!response.ok) {
+                    throw new Error(`GitHub README 加载失败：${response.status}`);
+                }
+
+                const markdown = await response.text();
+                const releases = parseChangelogMarkdown(markdown);
+                if (!releases.length) {
+                    throw new Error('未解析到更新日志版本');
+                }
+
+                timeline.innerHTML = releases.map(renderChangelogRelease).join('');
+            } catch (error) {
+                console.warn('更新日志同步失败，继续显示页面内置内容。', error);
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
+            loadChangelogFromGitHub();
+
             const mobileMenuBtn = document.getElementById('mobileMenuBtn');
             const closeDrawerBtn = document.getElementById('closeDrawerBtn');
             const mobileDrawer = document.getElementById('mobileDrawer');
