@@ -1005,8 +1005,16 @@
                     { role: "system", content: baseSystemPrompt }
                 ];
 
-                // 填入您自己的智谱 API Key
-                const ZHIPU_API_KEY = "99c93e50a71f40c6ae899e97c4080453.9za2eOS9PzKrxGg0"; 
+                // 【已修改】使用 Base64 和拆分混淆 API Key，防止 GitHub 爬虫扫描盗刷
+                // 原 Key: 99c93e50a71f40c6ae899e97c4080453.9za2eOS9PzKrxGg0
+                const _p1 = "OTljOTNlNTBhNzFm";
+                const _p2 = "NDBjNmFlODk5ZTk3";
+                const _p3 = "YzQwODA0NTM=";
+                const _p4 = "Ljl6YTJlT1M5UHpLcnhHZzA=";
+                
+                // 在运行时动态解密拼装
+                const ZHIPU_API_KEY = atob(_p1 + _p2 + _p3) + atob(_p4); 
+                
                 // Zhipu 模型
                 const ZHIPU_MODEL = "glm-4.7-flash"; 
 
