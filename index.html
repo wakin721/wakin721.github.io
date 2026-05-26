@@ -240,6 +240,27 @@
             color: var(--md-primary);
             animation: pulse 1s infinite;
         }
+
+        /* -------------------------- */
+        /* 夜间模式切换：全局及图标动画 */
+        /* -------------------------- */
+        #themeIcon {
+            transition: transform 0.2s ease-in, opacity 0.2s ease-in;
+            display: inline-block;
+        }
+        
+        /* View Transition API 扩散圆动画样式 */
+        ::view-transition-old(root),
+        ::view-transition-new(root) {
+            animation: none;
+            mix-blend-mode: normal;
+        }
+        ::view-transition-old(root) {
+            z-index: 1;
+        }
+        ::view-transition-new(root) {
+            z-index: 9999;
+        }
     </style>
 </head>
 <body class="relative bg-md-surface text-md-onSurface transition-colors duration-300">
@@ -594,7 +615,8 @@
             themeIcon.innerText = 'dark_mode';
         }
 
-        themeToggleBtn.addEventListener('click', () => {
+        // 核心状态切换逻辑
+        function toggleThemeAction() {
             htmlEl.classList.toggle('dark');
             if (htmlEl.classList.contains('dark')) {
                 localStorage.theme = 'dark';
@@ -603,6 +625,54 @@
                 localStorage.theme = 'light';
                 themeIcon.innerText = 'dark_mode';
             }
+        }
+
+        themeToggleBtn.addEventListener('click', (e) => {
+            // 1. 图标旋转缩放微动画
+            themeIcon.style.transform = 'scale(0.5) rotate(180deg)';
+            themeIcon.style.opacity = '0';
+            setTimeout(() => {
+                themeIcon.style.transform = 'scale(1) rotate(0deg)';
+                themeIcon.style.opacity = '1';
+            }, 200);
+
+            // 2. 如果浏览器不支持 View Transitions API，则回退到传统切换
+            if (!document.startViewTransition) {
+                toggleThemeAction();
+                return;
+            }
+
+            // 3. 获取点击位置，作为扩散动画的圆心
+            const x = e.clientX;
+            const y = e.clientY;
+            
+            // 计算屏幕最远对角的距离，作为扩散圆的最终半径
+            const endRadius = Math.hypot(
+                Math.max(x, innerWidth - x),
+                Math.max(y, innerHeight - y)
+            );
+
+            // 4. 启动原生视图过渡 API
+            const transition = document.startViewTransition(() => {
+                toggleThemeAction();
+            });
+
+            // 5. 当新的 DOM 构建完成后，播放 clip-path 圆形扩散遮罩动画
+            transition.ready.then(() => {
+                document.documentElement.animate(
+                    {
+                        clipPath: [
+                            `circle(0px at ${x}px ${y}px)`,
+                            `circle(${endRadius}px at ${x}px ${y}px)`
+                        ]
+                    },
+                    {
+                        duration: 500, // 全屏扩散时长
+                        easing: 'ease-out',
+                        pseudoElement: '::view-transition-new(root)'
+                    }
+                );
+            });
         });
 
         // --- GitHub README 更新日志同步 ---
@@ -801,8 +871,8 @@
 
                 timeline.innerHTML = releases.map(renderChangelogRelease).join('');
                 
-                // 将前几个版本的更新日志提取为纯文本，注入给 AI 助手
-                aiChangelogContext = releases.map(r => `[版本：${r.version}，发布时间：${r.date || '未知'}]\n更新内容：\n${r.items.join('\n')}`).join('\n\n');
+                // 【性能优化 1】只提取最新的第 1 个版本的更新日志，大幅减少 AI 需要阅读的上下文长度，极大地降低大模型首字延迟
+                aiChangelogContext = releases.slice(0, 1).map(r => `[版本：${r.version}，发布时间：${r.date || '未知'}]\n更新内容：\n${r.items.join('\n')}`).join('\n\n');
                 
             } catch (error) {
                 console.warn('更新日志同步失败，继续显示页面内置内容。', error);
@@ -918,7 +988,7 @@
             if (aiFab && aiChatWindow) {
                 let isChatOpen = false;
                 
-                // 基础系统提示词（新增强制使用 Markdown 的要求）
+                // 基础系统提示词
                 const baseSystemPrompt = `你是 Neri 官网的官方智能助手。Neri (NERI Enables Rapid Identification) 是一款专为红外相机影像数据设计的智能桌面处理工具。
 请基于以下核心事实回答用户问题：
 1. 核心功能：基于 YOLO 目标检测模型进行野生动物识别、图像/视频批量处理、自动提取 EXIF、本地比对 2026版《中国生物物种名录》、支持导出 CSV/XLSX。
@@ -937,7 +1007,7 @@
 
                 // 填入您自己的智谱 API Key
                 const ZHIPU_API_KEY = "99c93e50a71f40c6ae899e97c4080453.9za2eOS9PzKrxGg0"; 
-                // 恢复为您确定的 glm-4.7-flash 模型
+                // Zhipu 模型
                 const ZHIPU_MODEL = "glm-4.7-flash"; 
 
                 function toggleChat() {
@@ -964,11 +1034,9 @@
                     let extraClasses = '';
 
                     if (isUser) {
-                        // 用户输入保持纯文本，转义 HTML 防注入。此处加上 whitespace-pre-wrap 保证用户输入的回车可见。
                         messageContent = escapeHTML(text);
                         extraClasses = 'whitespace-pre-wrap';
                     } else {
-                        // AI 输出：使用 marked 解析 Markdown，并赋予 Tailwind 的 prose 美化样式，去除会引起空白的 whitespace-pre-wrap。
                         messageContent = marked.parse(text);
                         extraClasses = 'prose prose-sm max-w-none dark:prose-invert prose-p:my-1 prose-headings:my-2 prose-pre:my-2 prose-pre:bg-black/5 dark:prose-pre:bg-white/10 prose-pre:text-md-onSurface prose-ul:my-1 text-md-onSurface';
                     }
@@ -1013,7 +1081,6 @@
                     if (loading) loading.remove();
                 }
 
-                // 创建一个用于流式输出的消息气泡，自带 prose 样式并挂载 typing-cursor 伪类
                 function createStreamingMessage() {
                     const msgDiv = document.createElement('div');
                     msgDiv.className = `flex gap-2 items-end self-start max-w-[85%]`;
@@ -1040,12 +1107,9 @@
                     const payload = {
                         messages: history,
                         model: ZHIPU_MODEL,
-                        thinking: {
-                            type: "enabled"
-                        },
                         max_tokens: 65536,
                         temperature: 1.0,
-                        stream: true // 启用流式输出
+                        stream: true
                     };
 
                     const response = await fetch(url, {
@@ -1077,19 +1141,18 @@
 
                         buffer += decoder.decode(value, { stream: true });
                         const lines = buffer.split('\n');
-                        buffer = lines.pop(); // 保留最后一行可能未完整的数据块
+                        buffer = lines.pop();
 
                         for (const line of lines) {
                             if (line.trim() === '') continue;
                             if (line.startsWith('data:')) {
                                 const dataStr = line.slice(5).trim();
-                                if (dataStr === '[DONE]') return; // 流结束标志
+                                if (dataStr === '[DONE]') return; 
 
                                 try {
                                     const data = JSON.parse(dataStr);
                                     const delta = data.choices?.[0]?.delta;
                                     
-                                    // 仅获取最终回复（delta.content），忽略思考过程
                                     if (delta !== undefined) {
                                         const content = delta.content || "";
                                         onChunk(content);
@@ -1112,37 +1175,33 @@
 
                     addMessage(text, true);
                     
-                    // 发送前动态更新系统提示词，把抓取到的更新日志加进去
                     let dynamicPrompt = baseSystemPrompt;
                     if (aiChangelogContext) {
                         dynamicPrompt += `\n\n【最新发布版本及更新日志】\n${aiChangelogContext}`;
                     }
                     chatHistory[0].content = dynamicPrompt;
                     
-                    // 将用户消息推入对话历史
                     chatHistory.push({ role: "user", content: text });
 
-                    if (!ZHIPU_API_KEY || ZHIPU_API_KEY === "your-api-key" || ZHIPU_API_KEY.length < 10) {
-                        addMessage("提示：未检测到有效的 API 密钥。请在源码中将 ZHIPU_API_KEY 替换为您真实的密钥。", false);
+                    if (!ZHIPU_API_KEY || ZHIPU_API_KEY.length < 10) {
+                        addMessage("提示：未检测到有效的 API 密钥。", false);
                         aiChatInput.disabled = false;
                         aiChatSend.disabled = false;
                         chatHistory.pop(); 
                         return;
                     }
 
-                    // 初始展示"三个点"的跳动加载状态
                     addLoading();
                     
                     let streamTarget = null;
                     let fullReply = "";
                     let isFirstChunk = true;
+                    let renderTimer = null; // 动画帧定时器变量
 
                     try {
                         await fetchZhipuStream(chatHistory, (chunk) => {
-                            // 如果大模型正在思考，返回的正式内容为空，则直接跳过，保持加载动画
                             if (!chunk) return;
 
-                            // 只有在收到第一个【有效文字字符】时，才移除跳动的加载动画，替换为正式的流式消息气泡
                             if (isFirstChunk) {
                                 removeLoading();
                                 streamTarget = createStreamingMessage();
@@ -1150,29 +1209,36 @@
                             }
                             
                             fullReply += chunk;
-                            // 实时渲染 Markdown。光标通过 .typing-cursor 类的 CSS 伪元素自动挂载，不干扰 HTML 结构。
-                            streamTarget.contentNode.innerHTML = marked.parse(fullReply);
-                            aiChatMessages.scrollTop = aiChatMessages.scrollHeight; // 滚动到底部
+                            
+                            // 【性能优化 2】节流渲染：利用 requestAnimationFrame 避免每收到一个字就重绘，大幅减轻浏览器渲染压力
+                            if (!renderTimer) {
+                                renderTimer = requestAnimationFrame(() => {
+                                    streamTarget.contentNode.innerHTML = marked.parse(fullReply);
+                                    aiChatMessages.scrollTop = aiChatMessages.scrollHeight;
+                                    renderTimer = null;
+                                });
+                            }
                         });
                         
-                        // 流结束后的收尾工作：移除代表光标的 class
+                        // 结束收尾处理
+                        if (renderTimer) cancelAnimationFrame(renderTimer);
                         if (streamTarget) {
                             streamTarget.contentNode.classList.remove('typing-cursor');
+                            streamTarget.contentNode.innerHTML = marked.parse(fullReply); // 确保最后一次渲染完整
                         } else {
                             removeLoading();
                             addMessage("（空回复）", false);
                         }
                         
-                        // 将完整的模型回复推入历史，以便实现多轮对话
                         chatHistory.push({ role: "assistant", content: fullReply });
 
                     } catch (error) {
+                        if (renderTimer) cancelAnimationFrame(renderTimer);
                         if (isFirstChunk) {
                             removeLoading();
                             addMessage("抱歉，API 连接失败：" + error.message, false);
                         } else if (streamTarget) {
                             streamTarget.contentNode.classList.remove('typing-cursor');
-                            // 断开连接时将报错信息以 Markdown 加粗红字附加在尾部
                             streamTarget.contentNode.innerHTML = marked.parse(fullReply + `\n\n**[连接中断：${error.message}]**`);
                         }
                         chatHistory.pop();
