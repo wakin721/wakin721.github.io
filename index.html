@@ -20,7 +20,20 @@
         }
     </script>
 
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入带有 typography 插件的 Tailwind，用于自动美化 Markdown 排版 -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <!-- 引入 marked.js 解析 Markdown 为 HTML -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- 配置 marked.js 支持回车软换行 -->
+    <script>
+        if (typeof marked !== 'undefined') {
+            marked.setOptions({
+                breaks: true, // 允许回车直接换行
+                gfm: true
+            });
+        }
+    </script>
+    
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -212,6 +225,21 @@
         ::-webkit-scrollbar-track { background: var(--md-surface); }
         ::-webkit-scrollbar-thumb { background: var(--md-surfaceVariant); border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: var(--md-outline); }
+
+        /* 纯 CSS 智能光标：动态挂载到最后一个元素的尾部，不破坏 Markdown 结构 */
+        .typing-cursor > *:last-child::after {
+            content: ' |';
+            font-weight: bold;
+            color: var(--md-primary);
+            animation: pulse 1s infinite;
+        }
+        /* 当内容为空时的兜底光标 */
+        .typing-cursor:empty::after {
+            content: '|';
+            font-weight: bold;
+            color: var(--md-primary);
+            animation: pulse 1s infinite;
+        }
     </style>
 </head>
 <body class="relative bg-md-surface text-md-onSurface transition-colors duration-300">
@@ -382,78 +410,7 @@
                 </div>
 
                 <div id="changelogTimeline" class="relative border-l-2 border-md-surfaceVariant ml-4 md:ml-0 md:pl-0 transition-colors duration-300">
-                    
-                    <div class="mb-12 relative pl-8 md:pl-0">
-                        <div class="md:hidden absolute w-4 h-4 bg-md-primary rounded-full -left-[9px] top-1"></div>
-                        <div class="md:flex items-start justify-between">
-                            <div class="md:w-1/4 md:text-right md:pr-8 relative">
-                                <div class="hidden md:block absolute w-4 h-4 bg-md-primary rounded-full -right-[9px] top-1 shadow-[0_0_0_4px_var(--md-surfaceContainer)] transition-shadow duration-300"></div>
-                                <h3 class="text-xl font-bold text-md-primary transition-colors duration-300">v3.0.3-beta</h3>
-                                <p class="text-md-onSurfaceVariant text-sm mt-1 transition-colors duration-300">2026.05.23</p>
-                                <span class="inline-block px-2 py-1 bg-md-primaryContainer text-md-onPrimaryContainer text-xs rounded-lg mt-2 font-medium transition-colors duration-300">最新大版本</span>
-                            </div>
-                            <div class="md:w-3/4 md:pl-8 mt-4 md:mt-0">
-                                <div class="md3-card border-2 border-md-primary shadow-sm bg-md-surfaceContainerLowest">
-                                    <ul class="list-none text-md-onSurfaceVariant space-y-3 transition-colors duration-300">
-                                        <li class="flex gap-2"><span class="shrink-0">🖍️</span><span><strong>内容更新</strong>：设置页“软件更新”顶部新增当前版本信息；“项目信息”调整为“关于”，并提供版本号、更新说明、反馈建议和源代码入口；连续点击版本号可开启调试模式。</span></li>
-                                        <li class="flex gap-2"><span class="shrink-0">🧪</span><span><strong>调试增强</strong>：新增调试模式页面，可查看前端版本、后端版本、后端地址、运行平台、GPU/PyTorch 状态、YOLO 依赖状态；支持复制调试信息、查看已安装 Python 库以及读取软件日志，便于定位环境和依赖问题。</span></li>
-                                        <li class="flex gap-2"><span class="shrink-0">✅</span><span><strong>体验优化</strong>：优化启动连接后的全局加载状态，尽量等待初始页面数据加载完成后再关闭加载条；优化程序关闭流程，在 Python 后端已关闭或不可用时减少退出等待；未检测到可用 GPU 时自动禁用 FP16；开始界面删除任务提示改为显示处理路径和当前状态。</span></li>
-                                        <li class="flex gap-2"><span class="shrink-0">🧭</span><span><strong>校验优化</strong>：校验界面的物种分组会按当前置信度重新计算，低于阈值而被过滤的检测会归入过滤后的分组；当整组照片都低于阈值时直接显示为“空”，避免继续停留在原物种分组。</span></li>
-                                        <li class="flex gap-2"><span class="shrink-0">🔧</span><span><strong>问题修复</strong>：修复 Windows 端连接后端后可能闪退的问题；修复后端父进程监听在部分权限场景下可能误判退出的问题；调整主界面页面承载方式，降低 Windows 可访问性树更新异常对界面的影响。</span></li>
-                                    </ul>
-                                    <div class="mt-5 p-3 bg-md-errorContainer text-md-onErrorContainer text-sm rounded-xl border border-md-error transition-colors duration-300">
-                                        <strong>⚠️ Warning：</strong> 部分avi格式视频可能无法识别，暂不支持windows7系统。对intel gpu的支持为实验性，在部分电脑上可能会报错。
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="mb-12 relative pl-8 md:pl-0">
-                        <div class="md:hidden absolute w-4 h-4 bg-md-outline rounded-full -left-[9px] top-1"></div>
-                        <div class="md:flex items-start justify-between">
-                            <div class="md:w-1/4 md:text-right md:pr-8 relative">
-                                <div class="hidden md:block absolute w-4 h-4 bg-md-outline rounded-full -right-[9px] top-1 shadow-[0_0_0_4px_var(--md-surfaceContainer)] transition-shadow duration-300"></div>
-                                <h3 class="text-xl font-bold text-md-onSurface transition-colors duration-300">v3.0.2-beta</h3>
-                                <p class="text-md-onSurfaceVariant text-sm mt-1 transition-colors duration-300">2026年05月20日</p>
-                            </div>
-                            <div class="md:w-3/4 md:pl-8 mt-4 md:mt-0">
-                                <div class="md3-card bg-md-surfaceContainerLow">
-                                    <ul class="list-none text-md-onSurfaceVariant space-y-3 transition-colors duration-300">
-                                        <li class="flex gap-2"><span class="shrink-0">🖍️</span><span><strong>内容更新</strong>：校验界面支持批量撤回，可一次撤回最近多步校验操作；设置 → 基础设置新增“撤回步数”配置，支持设置一次撤回的步数；后端新增批量校验标记接口，用于快速标记、批量标记和批量撤回。</span></li>
-                                        <li class="flex gap-2"><span class="shrink-0">✅</span><span><strong>体验优化</strong>：快速标记和批量标记改为批量提交，减少大量单项请求导致的加载末尾卡顿；校验界面空状态下，“重新获取”按钮会在加载时显示加载状态；检测依赖未安装时，检测设置中的“安装依赖”会弹窗确认并自动检测安装，不再跳转到环境维护；开始界面在检测依赖未安装时，会禁用模型文件、分类模型、视频处理、FP16、置信度、IOU 等检测相关设置；校验界面“其他”按钮高度与刷新/撤回按钮保持一致，物种按钮和数字按钮恢复原高度。</span></li>
-                                        <li class="flex gap-2"><span class="shrink-0">🔧</span><span><strong>问题修复</strong>：修复撤回只能撤回上一步的问题；修复校验界面部分按钮高度不一致的问题；修复检测依赖缺失时，设置页安装路径不够直观的问题</span></li>
-                                    </ul>
-                                    <div class="mt-4 p-3 bg-md-errorContainer/30 text-md-onErrorContainer text-sm rounded-xl transition-colors duration-300">
-                                        <strong>⚠️ Warning：</strong> 部分avi格式视频可能无法识别，暂不支持windows7系统。对intel gpu的支持为实验性，在部分电脑上可能会报错。
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="mb-12 relative pl-8 md:pl-0">
-                        <div class="md:hidden absolute w-4 h-4 bg-md-outline rounded-full -left-[9px] top-1"></div>
-                        <div class="md:flex items-start justify-between">
-                            <div class="md:w-1/4 md:text-right md:pr-8 relative">
-                                <div class="hidden md:block absolute w-4 h-4 bg-md-outline rounded-full -right-[9px] top-1 shadow-[0_0_0_4px_var(--md-surfaceContainer)] transition-shadow duration-300"></div>
-                                <h3 class="text-xl font-bold text-md-onSurface transition-colors duration-300">v3.0.1-beta</h3>
-                                <p class="text-md-onSurfaceVariant text-sm mt-1 transition-colors duration-300">2026年05月18日</p>
-                            </div>
-                            <div class="md:w-3/4 md:pl-8 mt-4 md:mt-0">
-                                <div class="md3-card bg-md-surfaceContainerLow">
-                                    <ul class="list-none text-md-onSurfaceVariant space-y-3 transition-colors duration-300">
-                                        <li class="flex gap-2"><span class="shrink-0">🖍️</span><span><strong>内容更新</strong>：移植部分功能，完善部分交互。</span></li>
-                                        <li class="flex gap-2"><span class="shrink-0">🔧</span><span><strong>问题修复</strong>：修复了部分bug。</span></li>
-                                    </ul>
-                                    <div class="mt-4 p-3 bg-md-errorContainer/30 text-md-onErrorContainer text-sm rounded-xl transition-colors duration-300">
-                                        <strong>⚠️ Warning：</strong> 此版本更新幅度较大，安装时请删除原先的应用程序！！！对intel gpu的支持为实验性，在部分电脑上可能会报错。
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
+                    <!-- Changelog items loaded via GitHub dynamically -->
                 </div>
                 
                 <div class="mt-12 flex justify-center">
@@ -824,6 +781,8 @@
             `;
         }
 
+        let aiChangelogContext = ""; // 用于存储抓取到的更新日志供 AI 读取
+
         async function loadChangelogFromGitHub() {
             const timeline = document.getElementById('changelogTimeline');
             if (!timeline) return;
@@ -841,6 +800,10 @@
                 }
 
                 timeline.innerHTML = releases.map(renderChangelogRelease).join('');
+                
+                // 将前几个版本的更新日志提取为纯文本，注入给 AI 助手
+                aiChangelogContext = releases.map(r => `[版本：${r.version}，发布时间：${r.date || '未知'}]\n更新内容：\n${r.items.join('\n')}`).join('\n\n');
+                
             } catch (error) {
                 console.warn('更新日志同步失败，继续显示页面内置内容。', error);
             }
@@ -944,7 +907,7 @@
                 }
             });
 
-            // --- AI DeepSeek Chat Logic ---
+            // --- AI Zhipu Chat Logic ---
             const aiFab = document.getElementById('aiFab');
             const aiChatWindow = document.getElementById('aiChatWindow');
             const aiChatClose = document.getElementById('aiChatClose');
@@ -955,8 +918,8 @@
             if (aiFab && aiChatWindow) {
                 let isChatOpen = false;
                 
-                // 【已修改】更丰富、更精准的系统提示词（增加发行版安装与源码部署详细指南）
-                const systemPrompt = `你是 Neri 官网的官方智能助手。Neri (NERI Enables Rapid Identification) 是一款专为红外相机影像数据设计的智能桌面处理工具。
+                // 基础系统提示词（新增强制使用 Markdown 的要求）
+                const baseSystemPrompt = `你是 Neri 官网的官方智能助手。Neri (NERI Enables Rapid Identification) 是一款专为红外相机影像数据设计的智能桌面处理工具。
 请基于以下核心事实回答用户问题：
 1. 核心功能：基于 YOLO 目标检测模型进行野生动物识别、图像/视频批量处理、自动提取 EXIF、本地比对 2026版《中国生物物种名录》、支持导出 CSV/XLSX。
 2. 发行版安装：Windows 桌面版【免安装，解压即用】，双击 Neri.exe 即可，首次运行需联网自动下载依赖。
@@ -964,16 +927,18 @@
    - 后端 (Python/FastAPI): 执行 pip install -r requirements.txt，然后运行 uvicorn system.backend.main:app --reload --host 127.0.0.1 --port 721。
    - 前端 (Flutter): 进入 frontend 目录，执行 flutter pub get，然后 flutter run。
 4. 环境与加速：支持 NVIDIA CUDA/FP16 加速（首次运行自动检测并安装对应版 PyTorch），同时也支持 Intel XPU 加速。
-回答要求：简明扼要、专业友好，尽量控制在 150 字以内。遇到不清楚的问题，请引导用户查看网页上的“使用文档与配置指南”或前往 GitHub 仓库查看。`;
+回答要求：简明扼要、专业友好，尽量控制在 150 字以内。遇到不清楚的问题，请引导用户查看网页上的“使用文档与配置指南”或前往 GitHub 仓库查看。
+【重要要求】请务必使用 Markdown 格式输出回答，适当使用加粗、列表等排版。`;
                 
-                // DeepSeek/OpenAI 标准的消息历史格式
+                // 标准的消息历史格式
                 let chatHistory = [
-                    { role: "system", content: systemPrompt }
+                    { role: "system", content: baseSystemPrompt }
                 ];
 
-                // 部署到您自己的 Github Pages 时，请填入您真实的 DeepSeek API Key
-                const DEEPSEEK_API_KEY = "sk-c064f017f1534e89b263c6ab2ef96f92"; 
-                const DEEPSEEK_MODEL = "deepseek-v4-flash"; 
+                // 填入您自己的智谱 API Key
+                const ZHIPU_API_KEY = "99c93e50a71f40c6ae899e97c4080453.9za2eOS9PzKrxGg0"; 
+                // 恢复为您确定的 glm-4.7-flash 模型
+                const ZHIPU_MODEL = "glm-4.7-flash"; 
 
                 function toggleChat() {
                     isChatOpen = !isChatOpen;
@@ -995,6 +960,19 @@
                     msgDiv.className = `flex gap-2 items-end max-w-[85%] ${isUser ? 'self-end flex-row-reverse' : 'self-start'}`;
                     
                     let avatar = '';
+                    let messageContent = '';
+                    let extraClasses = '';
+
+                    if (isUser) {
+                        // 用户输入保持纯文本，转义 HTML 防注入。此处加上 whitespace-pre-wrap 保证用户输入的回车可见。
+                        messageContent = escapeHTML(text);
+                        extraClasses = 'whitespace-pre-wrap';
+                    } else {
+                        // AI 输出：使用 marked 解析 Markdown，并赋予 Tailwind 的 prose 美化样式，去除会引起空白的 whitespace-pre-wrap。
+                        messageContent = marked.parse(text);
+                        extraClasses = 'prose prose-sm max-w-none dark:prose-invert prose-p:my-1 prose-headings:my-2 prose-pre:my-2 prose-pre:bg-black/5 dark:prose-pre:bg-white/10 prose-pre:text-md-onSurface prose-ul:my-1 text-md-onSurface';
+                    }
+
                     if (!isUser) {
                         avatar = `<div class="w-8 h-8 rounded-full bg-md-primaryContainer text-md-onPrimaryContainer flex items-center justify-center flex-shrink-0">
                                     <span class="material-symbols-outlined text-sm">smart_toy</span>
@@ -1005,7 +983,7 @@
                     
                     msgDiv.innerHTML = `
                         ${avatar}
-                        <div class="${bubbleColor} p-3 rounded-2xl text-sm leading-relaxed whitespace-pre-wrap">${text}</div>
+                        <div class="${bubbleColor} p-3 rounded-2xl text-sm leading-relaxed ${extraClasses}">${messageContent}</div>
                     `;
                     
                     aiChatMessages.appendChild(msgDiv);
@@ -1035,63 +1013,91 @@
                     if (loading) loading.remove();
                 }
 
-                // 带有指数退避重试机制的 DeepSeek 请求函数
-                async function fetchDeepSeekWithBackoff(history, maxRetries = 5) {
-                    const delays = [1000, 2000, 4000, 8000, 16000];
-                    const url = `https://api.deepseek.com/chat/completions`;
+                // 创建一个用于流式输出的消息气泡，自带 prose 样式并挂载 typing-cursor 伪类
+                function createStreamingMessage() {
+                    const msgDiv = document.createElement('div');
+                    msgDiv.className = `flex gap-2 items-end self-start max-w-[85%]`;
+                    
+                    msgDiv.innerHTML = `
+                        <div class="w-8 h-8 rounded-full bg-md-primaryContainer text-md-onPrimaryContainer flex items-center justify-center flex-shrink-0">
+                            <span class="material-symbols-outlined text-sm">smart_toy</span>
+                        </div>
+                        <div class="bg-md-surfaceContainer bg-opacity-80 p-3 rounded-2xl rounded-bl-sm text-md-onSurface text-sm leading-relaxed prose prose-sm max-w-none dark:prose-invert prose-p:my-1 prose-headings:my-2 prose-pre:my-2 prose-pre:bg-black/5 dark:prose-pre:bg-white/10 prose-pre:text-md-onSurface prose-ul:my-1 typing-cursor streaming-content"></div>
+                    `;
+                    
+                    aiChatMessages.appendChild(msgDiv);
+                    aiChatMessages.scrollTop = aiChatMessages.scrollHeight;
 
+                    return {
+                        container: msgDiv,
+                        contentNode: msgDiv.querySelector('.streaming-content')
+                    };
+                }
+
+                // 智谱流式请求函数
+                async function fetchZhipuStream(history, onChunk) {
+                    const url = `https://open.bigmodel.cn/api/paas/v4/chat/completions`;
                     const payload = {
                         messages: history,
-                        model: DEEPSEEK_MODEL,
+                        model: ZHIPU_MODEL,
                         thinking: {
                             type: "enabled"
                         },
-                        reasoning_effort: "high",
-                        max_tokens: 4096,
-                        response_format: {
-                            type: "text"
-                        },
-                        temperature: 1,
-                        top_p: 1
+                        max_tokens: 65536,
+                        temperature: 1.0,
+                        stream: true // 启用流式输出
                     };
 
-                    for (let i = 0; i <= maxRetries; i++) {
-                        try {
-                            const response = await fetch(url, {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    'Accept': 'application/json',
-                                    'Authorization': `Bearer ${DEEPSEEK_API_KEY}`
-                                },
-                                body: JSON.stringify(payload)
-                            });
-                            
-                            if (!response.ok) {
-                                const errorData = await response.json().catch(() => ({}));
-                                const errMsg = errorData.error?.message || "";
-                                // 特殊处理限流 (Rate limit) 和 配额 (Quota) 错误
-                                if (response.status === 429 || errMsg.includes('Quota') || errMsg.includes('Rate limit')) {
-                                    throw new Error("API 请求过于频繁或余额不足，请稍后再试。");
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json',
+                            'Authorization': `Bearer ${ZHIPU_API_KEY}`
+                        },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (!response.ok) {
+                        const errorData = await response.json().catch(() => ({}));
+                        const errMsg = errorData.error?.message || "";
+                        if (response.status === 429 || errMsg.includes('Quota') || errMsg.includes('Rate limit')) {
+                            throw new Error("API 请求过于频繁或余额不足，请稍后再试。");
+                        }
+                        throw new Error(errMsg || `HTTP 请求错误！状态码: ${response.status}`);
+                    }
+
+                    const reader = response.body.getReader();
+                    const decoder = new TextDecoder('utf-8');
+                    let buffer = '';
+
+                    while (true) {
+                        const { done, value } = await reader.read();
+                        if (done) break;
+
+                        buffer += decoder.decode(value, { stream: true });
+                        const lines = buffer.split('\n');
+                        buffer = lines.pop(); // 保留最后一行可能未完整的数据块
+
+                        for (const line of lines) {
+                            if (line.trim() === '') continue;
+                            if (line.startsWith('data:')) {
+                                const dataStr = line.slice(5).trim();
+                                if (dataStr === '[DONE]') return; // 流结束标志
+
+                                try {
+                                    const data = JSON.parse(dataStr);
+                                    const delta = data.choices?.[0]?.delta;
+                                    
+                                    // 仅获取最终回复（delta.content），忽略思考过程
+                                    if (delta !== undefined) {
+                                        const content = delta.content || "";
+                                        onChunk(content);
+                                    }
+                                } catch (e) {
+                                    console.warn("解析 SSE 块失败:", dataStr, e);
                                 }
-                                throw new Error(errMsg || `HTTP 请求错误！状态码: ${response.status}`);
                             }
-                            
-                            const data = await response.json();
-                            const text = data.choices?.[0]?.message?.content;
-                            
-                            if (!text) {
-                                throw new Error("DeepSeek 返回了空的回复。");
-                            }
-                            
-                            return text;
-                        } catch (error) {
-                            if (i === maxRetries || error.message.includes("余额不足") || error.message.includes("过于频繁")) {
-                                console.error("DeepSeek API 请求最终失败:", error);
-                                throw error;
-                            }
-                            console.warn(`API请求异常，将在 ${delays[i]} 毫秒后进行第 ${i + 1} 次重试...`);
-                            await new Promise(res => setTimeout(res, delays[i]));
                         }
                     }
                 }
@@ -1105,32 +1111,70 @@
                     aiChatSend.disabled = true;
 
                     addMessage(text, true);
-                    addLoading();
+                    
+                    // 发送前动态更新系统提示词，把抓取到的更新日志加进去
+                    let dynamicPrompt = baseSystemPrompt;
+                    if (aiChangelogContext) {
+                        dynamicPrompt += `\n\n【最新发布版本及更新日志】\n${aiChangelogContext}`;
+                    }
+                    chatHistory[0].content = dynamicPrompt;
                     
                     // 将用户消息推入对话历史
                     chatHistory.push({ role: "user", content: text });
 
-                    if (!DEEPSEEK_API_KEY || DEEPSEEK_API_KEY === "") {
-                        removeLoading();
-                        addMessage("提示：未检测到有效的 API 密钥。请在源码中将 DEEPSEEK_API_KEY 替换为您真实的 sk- 开头的密钥。", false);
+                    if (!ZHIPU_API_KEY || ZHIPU_API_KEY === "your-api-key" || ZHIPU_API_KEY.length < 10) {
+                        addMessage("提示：未检测到有效的 API 密钥。请在源码中将 ZHIPU_API_KEY 替换为您真实的密钥。", false);
                         aiChatInput.disabled = false;
                         aiChatSend.disabled = false;
                         chatHistory.pop(); 
                         return;
                     }
 
+                    // 初始展示"三个点"的跳动加载状态
+                    addLoading();
+                    
+                    let streamTarget = null;
+                    let fullReply = "";
+                    let isFirstChunk = true;
+
                     try {
-                        const reply = await fetchDeepSeekWithBackoff(chatHistory);
+                        await fetchZhipuStream(chatHistory, (chunk) => {
+                            // 如果大模型正在思考，返回的正式内容为空，则直接跳过，保持加载动画
+                            if (!chunk) return;
+
+                            // 只有在收到第一个【有效文字字符】时，才移除跳动的加载动画，替换为正式的流式消息气泡
+                            if (isFirstChunk) {
+                                removeLoading();
+                                streamTarget = createStreamingMessage();
+                                isFirstChunk = false;
+                            }
+                            
+                            fullReply += chunk;
+                            // 实时渲染 Markdown。光标通过 .typing-cursor 类的 CSS 伪元素自动挂载，不干扰 HTML 结构。
+                            streamTarget.contentNode.innerHTML = marked.parse(fullReply);
+                            aiChatMessages.scrollTop = aiChatMessages.scrollHeight; // 滚动到底部
+                        });
                         
-                        removeLoading();
-                        addMessage(reply, false);
+                        // 流结束后的收尾工作：移除代表光标的 class
+                        if (streamTarget) {
+                            streamTarget.contentNode.classList.remove('typing-cursor');
+                        } else {
+                            removeLoading();
+                            addMessage("（空回复）", false);
+                        }
                         
-                        // 将模型回复推入对话历史
-                        chatHistory.push({ role: "assistant", content: reply });
+                        // 将完整的模型回复推入历史，以便实现多轮对话
+                        chatHistory.push({ role: "assistant", content: fullReply });
 
                     } catch (error) {
-                        removeLoading();
-                        addMessage("抱歉，API 连接失败：" + error.message, false);
+                        if (isFirstChunk) {
+                            removeLoading();
+                            addMessage("抱歉，API 连接失败：" + error.message, false);
+                        } else if (streamTarget) {
+                            streamTarget.contentNode.classList.remove('typing-cursor');
+                            // 断开连接时将报错信息以 Markdown 加粗红字附加在尾部
+                            streamTarget.contentNode.innerHTML = marked.parse(fullReply + `\n\n**[连接中断：${error.message}]**`);
+                        }
                         chatHistory.pop();
                     } finally {
                         aiChatInput.disabled = false;
